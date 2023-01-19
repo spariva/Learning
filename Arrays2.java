@@ -21,7 +21,7 @@ public class Arrays2{
                 if(i != 4 && j != 5){
                     array2[i][j] = (int)(Math.random()*100+1); //para que no cargue en la casilla de suma total.
                 }
-                if(a != 4 || b != 5){
+                if(a != 4 && b != 5){
                     array2[i][5] += array2[a][b];
                     array2[4][j] += array2[i][j];
                     array2[4][5] += array2[i][j];
