@@ -1,3 +1,106 @@
+import java.util.Scanner;
+
+public class CuentaBancaria{
+    private String numeroCuenta;
+    private String titular;
+    private double saldo;
+    private String moneda;
+    private static int contador; 
+    Scanner sc = new Scanner(System.in);
+//constructor
+    public CuentaBancaria(String numeroCuenta, String titular, int saldo, String moneda){
+        this.numeroCuenta = numeroCuenta;
+        this.titular = titular;
+        this.saldo = 0;
+        this.moneda = moneda;
+        contador = +1;
+    }
+
+//
+    public String getNumeroCuenta() {
+        return numeroCuenta;
+    }
+
+    public String getNombre() {
+        return titular;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setNombre(String titular) {
+        this.titular = titular;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+//methods 
+/*  ! Se separa lo que se enseña al cliente, y la lógica interna de los programas. 
+   public void retirarDinero(double dineroRetirado) {
+        if(this.saldo<dineroRetirado){
+            System.out.println("No tiene tanto dinero, sry");
+        }else{
+            this.saldo = this.saldo - dineroRetirado;
+        }
+            
+    } 
+*/
+/*   try { 
+        
+    } catch (Exception e) {
+        // TODO: handle exception
+    } 
+*/
+    public boolean retirarDinero(double dineroRetirado) {
+        if(dineroRetirado > saldo){
+            return false;
+        } else {
+            saldo -= dineroRetirado;
+            return true;
+        }
+    }
+    public void depositarDinero(double dineroDepositado) {
+        saldo += dineroDepositado;
+        System.out.println("Nuevo balance: "+ saldo + moneda);
+    }
+    public boolean hacerTransferencia(double dineroTransferido, CuentaBancaria cuentaDestino) { 
+        if(dineroTransferido > saldo){
+            return false;
+        } else {
+            saldo -= dineroTransferido;
+            cuentaDestino.saldo += dineroTransferido; //puedo, o tengo que usar su set que es público?
+            return true;
+        }
+  
+    }
+    public void setTitular(){
+        titular = sc.nextLine();
+    }
+    public String setNumeroCuenta(){
+        numeroCuenta = String.format("%020d", contador);
+        return numeroCuenta;
+
+    }
+    /*protected String setNumeroCuenta(){
+        for (int i = 0; i < numeroCuenta.length(); i++) {
+            numeroCuenta = new StringBuilder(numeroCuenta).append(String.valueOf(i)).toString();
+        }
+
+    }
+*/
+}
+    /*
+    public int[] generarNumeroCuenta(){
+        for (int i; i < numeroCuenta.length; i++){
+                        
+        }
+    }
+
+
+}
 /*Crea la clase CuentaBancaria
 
 Sus atributos serán todos privados.
@@ -17,52 +120,4 @@ Métodos:
 - depositarDinero(???)
 - hacerTransferencia(???)
 - Otros métodos que se puedan necesitar
-
-
-Crea la clase Ej_230125_CuentaBancaria
-Esta clase solamente tendrá el método main. Se podrán crear otros métodos auxiliares si fuesen necesarios, aunque en principio no hace falta.
-El método main hará lo siguiente:
-
-Creará el objeto cuentaNomina, que será una instancia de la clase CuentaBancaria.
-Creará el objeto cuentaDeAhorro, que será una instancia de la clase CuentaBancaria.
-Ambas cuentas tendrán el mismo titular, distinto número de cuenta y distinto saldo.
-cuentaNomina comenzará con un saldo de 1500€. cuentaDeAhorro comenzará con un saldo de 5000€.
-
-Imprimiremos el estado de cuentaNomina
-Imprimiremos el estado de cuentaDeAhorro
-Haremos una retirada de la cuentaNomina de 500€
-Haremos una transferencia de la cuentaNomina a la cuentaDeAhorro de 700€
-Haremos una retirada de la cuentaNomina de 500€
-Haremos un depósito en la cuentaNomina de 300€
-Haremos una retirada de la cuentaNomina de 500€
-Imprimiremos el estado de cuentaNomina
-Imprimiremos el estado de cuentaDeAhorro */
-
-public class CuentaBancaria{
-    private int[] numeroCuenta = new int[20];
-    private String titular;
-    private int saldo;
-    private String moneda; //me dan miedito los char, pero me atrevo con private static String moneda = "€"; ?
-//constructor
-    public CuentaBancaria(int[] numeroCuenta,String titular,int saldo,String moneda){
-        this.numeroCuenta = numeroCuenta;
-        this.titular = titular;
-        this.saldo = saldo;
-        this.moneda = moneda;
-    }
-
-//methods (realmente son setters, no?)
-    public void retirarDinero(int dineroRetirado) { //podría ser tipo int y return directamente el saldo?
-        saldo = saldo - dineroRetirado;       
-    }
-    public void depositarDinero(int dineroDepositado) {
-        saldo += dineroDepositado;
-        System.out.println("Nuevo balance: "+ saldo + moneda);
-    }
-    public int hacerTransferencia(int dineroTransferido) { 
-        saldo = saldo - dineroTransferido; 
-        return saldo; //puede returnear y tomar valores?
-    }
-
-
-}
+ */
