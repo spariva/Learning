@@ -1,4 +1,6 @@
 package codeWars;
+// It seems the method return Integer.bitCount(n); returns the the count of the number
+// of one-bits in the two’s complement binary representation of an int value.
 import java.util.ArrayList;
 public class BitCounting {
 
