@@ -1,0 +1,14 @@
+public class Kata {
+public public static void main(String[] args) {
+    solution();
+}
+  public static String solution(String str) {
+    // Your code here...
+    String result = "";
+    for(int i=0;i<str.length();i++){
+      result += str.charAt(i);
+    }
+    return result;
+  }
+
+}
