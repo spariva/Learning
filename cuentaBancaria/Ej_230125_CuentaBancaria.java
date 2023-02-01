@@ -32,8 +32,8 @@ y mensajes de salida que según fuese cajero etc sería diferente la manera de h
             cuentaNomina.checkStatusAccount();
         }
 //Haremos una retirada de la cuentaNomina de 500€
-        boolean flag2 = cuentaNomina.retirarDinero(500);
-        if(flag2 == true){
+        flag1 = cuentaNomina.retirarDinero(500);
+        if(flag1 == true){
             System.out.println("Fit =)");
             cuentaNomina.checkStatusAccount();
             cuentaDeAhorro.checkStatusAccount();
@@ -44,8 +44,8 @@ y mensajes de salida que según fuese cajero etc sería diferente la manera de h
 //Haremos un depósito en la cuentaNomina de 300€ 
         cuentaNomina.depositarDinero(300);
 //Haremos una retirada de la cuentaNomina de 500€
-        boolean flag3 = cuentaNomina.retirarDinero(500);
-        if(flag3 == true){
+        flag1 = cuentaNomina.retirarDinero(500);
+        if(flag1 == true){
             System.out.println("Fit =)");
             cuentaNomina.checkStatusAccount();
             cuentaDeAhorro.checkStatusAccount();

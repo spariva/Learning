@@ -13,7 +13,7 @@ public class BitCounting {
 	 */
 	public static int countBits(int n){
 		// Show me the code!
-    ArrayList<int> binarios = new ArrayList<int>();
+    ArrayList<Integer> binarios = new ArrayList<Integer>();
     int contador = 1;
     if(n==0){   
       return 0;      
@@ -22,7 +22,7 @@ public class BitCounting {
             return 1;
           }else{
               while(n>1){
-                if (binarios%2==1){
+                if (n%2==1){
                   contador++;
                 }
                   binarios.add(n%2);
@@ -31,7 +31,7 @@ public class BitCounting {
                     binarios.add(1);
                     return contador;
                   }
-              }
+              }return contador;
           }
     }
 	
