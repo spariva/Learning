@@ -8,7 +8,7 @@ public class BitCounting {
 	 * @param n entero positivo
 	 * @return el número de bits=1 en binario de n
      * Hago un ArrayList porque no sé qué tamaño tendrá, 
-     * aunque luego pienso es más sencillo ir contando 1s,
+     * aunque luego pienso es más sencillo ir contando 1s,uiuhiubn
      * así que no reordeno el ArrayList para sacar el n en binario.
 	 */
 	public static int countBits(int n){
