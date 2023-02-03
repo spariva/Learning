@@ -1,5 +1,3 @@
-import programacion.tiempo.Time;
-
 public class MainTime {
   public static void main(String[] args) {
     Time medianoche = new Time(00, 00);

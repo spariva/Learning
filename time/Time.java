@@ -1,4 +1,4 @@
-package programacion.tiempo;
+
 
 /**
  * La clase Time representa una hora determinada, un momento de un día. Esta
