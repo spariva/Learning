@@ -1,5 +1,6 @@
-public class Kata {
-public public static void main(String[] args) {
+package codeWars;
+public class ReversedStrings {
+public static void main(String[] args) {
     solution();
 }
   public static String solution(String str) {
