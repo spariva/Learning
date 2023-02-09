@@ -76,9 +76,9 @@ public class AgenciaAlquiler{
         return cad;
     }
     public String vehiculosToString(){
-        String cad="\nLista de clientes: ";
+        String cad="\nLista de carros: ";
         for (int i = 0; i < numVehiculos; i++) {
-            cad += "\n\t " + i + vehiculos[i];
+            cad += "\n\t " + (i+1) + "." + vehiculos[i];
         }
         return cad;
     }
@@ -86,14 +86,15 @@ public class AgenciaAlquiler{
     public String toString(){
         String cadena="Agencia: ";
         cadena += nombre;
-        cadena += clientesToString();
+        //cadena += clientesToString();
         cadena += vehiculosToString();
         return cadena;
     }
 
-    public boolean addVehiculo(){
+    public boolean addVehiculo(String marca, String modelo){
         if (numVehiculos<vehiculosMax){
-            
+            Vehiculos nextVehiculo = new Vehiculos(marca,modelo);
+            vehiculos[numVehiculos] = nextVehiculo;
             numVehiculos++;
             return true;
         }else{

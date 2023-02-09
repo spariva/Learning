@@ -11,7 +11,12 @@ public class Vehiculos {
         this.posicionClienteAlquiler = null;
     }
 
-    
+    @Override
+    public String toString() {
+        return String.format("%s %s ",marca, modelo);
+    }
+
+
     
 
     

@@ -10,7 +10,9 @@ public class AgenciaMain {
             nombreAgencia = sc.nextLine();
         }while(nombreAgencia.length()<=0);
 
-        
+        AgenciaAlquiler agencia1 = new AgenciaAlquiler(nombreAgencia, 2, 1);
+        agencia1.addVehiculo("Seat", "Panda");
+        System.out.println(agencia1);
     }
     
 }
