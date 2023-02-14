@@ -3,9 +3,14 @@ package arays;
 public class Arrays3 {
     public static void main(String[] args) {
         int[][] matriz = new int[4][7];
-        for (int i = 0, j=0; i < matriz.length; i++, j++) {
-            matriz[i][j] = (int)Math.random()*101;
-            System.out.println(matriz[i][j]);
+        for (int i = 0; i < matriz.length; i++) {
+            matriz[i/4][i%7] = (int)Math.random()*101;
+            if(i<4){
+              System.out.print(matriz[i/4][i%7]);
+            }else{
+              
+            }
+            
         }
     }
     /*    Crea una matriz de 4 filas y 7 columnas de tipo int. Inicializa cada posición del array con un número aleatorio entre el 0 y el 100 e imprime la matriz por pantalla.
