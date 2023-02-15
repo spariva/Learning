@@ -16,7 +16,7 @@ public class Arrays4{
         int[] matriz = new int[30];
         for (int i = 0; i < matriz.length; i++) {
             matriz[i] = i;
-            printf(matriz[i]);
+            print(matriz[i]);
         }
 
         

@@ -1,18 +1,27 @@
 package arays;
-
 public class Arrays3 {
     public static void main(String[] args) {
-        int[][] matriz = new int[4][7];
-        for (int i = 0; i < matriz.length; i++) {
-            matriz[i/4][i%7] = (int)Math.random()*101;
-            if(i<4){
-              System.out.print(matriz[i/4][i%7]);
-            }else{
-              
+        final int F = 4;
+        final int C = 7;
+        int[][] matriz = new int[F][C];
+        for (int i = 0; i < F*C; i++) {
+            matriz[i/C][i%C] = (int)Math.random()*101;
+            System.out.printf("%3d  ",matriz[i/C][i%C]);
+            if((i+1) % C == 0 && i != 0){
+              System.out.println();
             }
+          }
             
+        
+        for (int i = 0; i < F*C; i++) {
+          matriz[i/C][i%C] = (int)Math.random()*101;
+          System.out.print(matriz[i%F][i/F]);
+          if((i+1) % C == 0 && i != 0){
+            System.out.println();
+          }
         }
-    }
+          
+      }
     /*    Crea una matriz de 4 filas y 7 columnas de tipo int. Inicializa cada posición del array con un número aleatorio entre el 0 y el 100 e imprime la matriz por pantalla.
      Tanto para inicializar los valores como para imprimirlos, utiliza un único bucle for, NO 2 bucles anidados, para acceder a las posiciones del array bidimensional, 
      tanto para asignarles valor como para imprimirlas. Piensa en cómo se inicializaban e imprimían las posiciones del array bidimensional matrix en la pregunta 
