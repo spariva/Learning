@@ -54,7 +54,7 @@ public class Asignatura {
                             break;
                     }
                 }else{
-                    cadena += String.format(" %3.2f ",(n1+n2+n3));
+                    cadena += String.format(" %3.2f ",(20+30+50));
                     
                 }
             }
