@@ -1,37 +1,24 @@
 package mineSeeker.src;
 
 public class Board {
-    private int[][] board;
-    private int bombPosition1;
-    private int minesAmount = 3;
-
-    public Board() {
-        board = new int[6][6];
-        for (int i = 0; i < minesAmount; i++) {
-            randomBombs();
-        }
-    }
-    public int randomBombs() {
-        bombPosition1 = (int)(Math.random()*101);
-        board[(int)(Math.random()*7)][(int)(Math.random()*7)] = bombPosition1;
-        return bombPosition1;
-    } 
-    /*    private Cell[][] board;
+    private Cell[][] board;
     private Cell bombPosition1;
-    private int minesAmount = 3;
+    private final int ANCHO = 6;
+    private final int ALTO = 6;
+    private final int MINES_AMOUNT = 3;
 
     public Board() {
-        board = new Cell[6][6];
-        for (int i = 0; i < minesAmount; i++) {
+        board = new Cell[ALTO][ANCHO];
+        for (int i = 0; i < MINES_AMOUNT; i++) {
             randomBombs();
         }
     }
     public Cell randomBombs() {
         bombPosition1 = new Cell();
-        board[(int)(Math.random()*7)][(int)(Math.random()*7)] = bombPosition1;
+        board[(int)(Math.random()*ALTO)][(int)(Math.random()*ANCHO)] = bombPosition1;
 
         bombPosition1.setBomb(true);
 
         return bombPosition1;
-    }  */
+    }  
 }
