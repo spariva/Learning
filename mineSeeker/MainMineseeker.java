@@ -4,7 +4,11 @@ import mineSeeker.src.Board;
 
 public class MainMineseeker {
     public static void main(String[] args) {
-        Board board = new Board();    
+        Board b = new Board();
+        b.imprimir();    
+        b.generateCells();
+        b.imprimir(); 
+
     }
 }
 /*Implementa el juego buscaminas por línea de comandos.

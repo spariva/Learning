@@ -43,5 +43,5 @@ public class Cell {
         this.value = value;
     }
 
-    
+
 }

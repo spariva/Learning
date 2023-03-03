@@ -9,10 +9,19 @@ public class Board {
 
     public Board() {
         board = new Cell[ALTO][ANCHO];
-        for (int i = 0; i < MINES_AMOUNT; i++) {
+
+        /*for (int i = 0; i < MINES_AMOUNT; i++) {
             randomBombs();
+        }*/
+    }
+    public void generateCells(){
+        for (int i = 0; i < ANCHO; i++) {
+            for (int j = 0; j < ALTO; j++) {
+            board[i][j] = new Cell();
+            }
         }
     }
+
     public Cell randomBombs() {
         bombPosition1 = new Cell();
         board[(int)(Math.random()*ALTO)][(int)(Math.random()*ANCHO)] = bombPosition1;
@@ -20,5 +29,13 @@ public class Board {
         bombPosition1.setBomb(true);
 
         return bombPosition1;
-    }  
+    }
+    public void imprimir(){
+        for (int i = 0; i < ALTO; i++) {
+            for (int j = 0; j < ANCHO; j++) {
+                System.out.println(board[i][j]);
+            }
+        }
+    }
+
 }
