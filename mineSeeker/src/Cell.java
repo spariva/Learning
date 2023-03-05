@@ -5,18 +5,8 @@ public class Cell {
     private boolean isVisible = false;
     private Integer value;
 
-    public Cell(boolean bomb, boolean isVisible, Integer value) {
-        this.bomb = bomb;
-        this.isVisible = isVisible;
-        this.value = value;
-    }
-
-    public Cell(Integer value) {
-        this.value = value;
-    }
-
     public Cell(){
-        
+   
     }
 
     public boolean isBomb() {
