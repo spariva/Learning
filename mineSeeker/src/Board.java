@@ -2,9 +2,9 @@ package mineSeeker.src;
 
 public class Board {
     private Cell[][] board;
-    private final int ANCHO = 3;
-    private final int ALTO = 3;
-    private final int TOTAL_BOMBS = 2;
+    private final int ANCHO = 6;
+    private final int ALTO = 6;
+    private final int TOTAL_BOMBS = 3;
     private boolean endGame = false;
 
     public Board() {
@@ -69,9 +69,17 @@ public class Board {
                     }
                 }
             }
+            if(board[posY][posX].getValue() == 0){
+                for (int i = -1; i < 1; i++) {
+                    for (int j = -1; j < 1; j++) {
+                        if(i == 0 && j == 0) continue;
+                        if(posY + i < 0 || posY + j < 0 || posY + i > ANCHO-1 || posX + j > ALTO-1){
+                            continue;
+                        }
+                        clickPosition(posY+i, posX+j);
+                    }
+                }
+            }
         }
-
-        
-        
     }
 }
