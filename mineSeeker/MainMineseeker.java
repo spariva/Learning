@@ -1,14 +1,24 @@
 package mineSeeker;
 
 import mineSeeker.src.Board;
+import java.util.Scanner;
 
 public class MainMineseeker {
     public static void main(String[] args) {
         Board b = new Board();
-        b.imprimir();    
-        b.generateCells();
-        b.imprimir(); 
-
+        Scanner sc = new Scanner(System.in);
+        int positionY;
+        int positionX;
+        
+        System.out.println("\nGame start ");
+        do{
+            System.out.println("\n\nInsert coordinates");
+            positionY = sc.nextInt();
+            positionX = sc.nextInt();
+            b.clickPosition(positionY, positionX);
+            b.imprimir();
+        }while(! b.getEndGame());     
+        System.out.println("\n\tEnd =(");
     }
 }
 /*Implementa el juego buscaminas por línea de comandos.

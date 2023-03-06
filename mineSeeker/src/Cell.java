@@ -2,27 +2,29 @@ package mineSeeker.src;
 //dead code, finals, buvle foriforj para el patrón 8
 public class Cell {
     private boolean bomb = false;
-    private boolean isVisible = false;
-    private Integer value;
+    private boolean visible = false;
+    private Integer value = 0;
 
     public Cell(){
    
     }
 
-    public boolean isBomb() {
+    public boolean getBomb() {
         return bomb;
     }
+
+
 
     public void setBomb(boolean bomb) {
         this.bomb = bomb;
     }
 
-    public boolean isVisible() {
-        return isVisible;
+    public boolean getVisible() {
+        return visible;
     }
 
     public void setVisible(boolean isVisible) {
-        this.isVisible = isVisible;
+        this.visible = isVisible;
     }
 
     public Integer getValue() {
@@ -32,6 +34,15 @@ public class Cell {
     public void setValue(Integer value) {
         this.value = value;
     }
-
+    
+    @Override
+    public String toString() {
+        if(visible){
+        String cad = (bomb) ? "*" : ""+value;
+        return cad;
+    }else{
+        return "+";
+    }
+    }
 
 }
