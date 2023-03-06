@@ -37,24 +37,27 @@ public class Asignatura {
         for (int i = 0; i < numEstudiantes; i++) {
             for (int j = 0; j < numEvaluaciones+1; j++) {
                 float intsumaMedia = 0f;
+                float n1, n2, n3;
                 if(j!=3){
                     cadena += String.format(" %3.2f ",notas[i][j]);
                     switch (j) {
                         case 0:
-                        float n1 = notas[i][j]*(20/100);
+                        n1 = notas[i][j]*(20/100);
                             break;
                         case 1:
-                        float n2 = notas[i][j] * (30/100);
+                        n2 = notas[i][j] * (30/100);
                             break;
                         case 2:
-                        float n3 = notas[i][j] * (50/100);
+                        n3 = notas[i][j] * (50/100);
                             break;
                         default:
 
                             break;
                     }
                 }else{
-                    cadena += String.format(" %3.2f ",(20+30+50));
+                    cadena += String.format(" %3.2f ",(n1+n2+n3));
+                    //por qué sigue diciendo que n1 etc son locales no inicializadas,
+                    //si están en el inicio del for? y en el if las puedo usar.
                     
                 }
             }
