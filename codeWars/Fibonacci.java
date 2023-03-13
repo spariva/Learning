@@ -9,6 +9,7 @@ class Fibonacci {
         int number = sc.nextInt();
         System.out.println(fibo(number));
         sc.close();
+        
     }
 
     public static int fibo(int x){
