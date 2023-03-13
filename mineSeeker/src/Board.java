@@ -57,10 +57,10 @@ public class Board {
             System.out.println("This is already visible!");
         }else{
             board[posY][posX].setVisible(true);
-            for (int i = -1; i < 1; i++) {
-                for (int j = -1; j < 1; j++) {
+            for (int i = -1; i < 2; i++) {
+                for (int j = -1; j < 2; j++) {
                     if(i == 0 && j == 0) continue;
-                    if(posY + i < 0 || posY + j < 0 || posY + i > ANCHO-1 || posX + j > ALTO-1){
+                    if(posY + i < 0 || posX + j < 0 || posY + i > ANCHO-1 || posX + j > ALTO-1){
                         continue;
                     }
                     if(board[posY + i][posX + j].getBomb()){
@@ -70,16 +70,24 @@ public class Board {
                 }
             }
             if(board[posY][posX].getValue() == 0){
-                for (int i = -1; i < 1; i++) {
-                    for (int j = -1; j < 1; j++) {
+                for (int i = -1; i < 2; i++) {
+                    for (int j = -1; j < 2; j++) {
                         if(i == 0 && j == 0) continue;
-                        if(posY + i < 0 || posY + j < 0 || posY + i > ANCHO-1 || posX + j > ALTO-1){
+                        if(posY + i < 0 || posX + j < 0 || posY + i > ANCHO-1 || posX + j > ALTO-1){
                             continue;
                         }
-                        clickPosition(posY+i, posX+j);
+                        if (board[posY+i][posX+j].getVisible()){
+                            continue;
+                        }else{
+                            clickPosition(posY+i, posX+j);
+                        }
                     }
                 }
             }
+            /*no sé si meter algo que cuente cuántas casillas quedan visibles, meter un static global que aumente por cada casilla visible y un if(contador==ANCHO*ALTO-TOTAL_MINES_AMOUNT). O un método para switchear entre picar celdas o marcar bombas. Pero seguiría entonces teniendo el problema de comprobar la victoria...
+
+            Molaría cambiar el ejercicio a ArrayList y que por cada pantalla resuelta se hiciera 1 fila y columna más grande... Bueno no tendría por qué ser ArrayList, tan solo incrementar ancho y alto.
+            */
         }
     }
 }
