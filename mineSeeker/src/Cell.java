@@ -1,19 +1,16 @@
 package mineSeeker.src;
-//dead code, finals, buvle foriforj para el patrón 8
+
 public class Cell {
     private boolean bomb = false;
     private boolean visible = false;
     private Integer value = 0;
 
     public Cell(){
-   
     }
 
     public boolean getBomb() {
         return bomb;
     }
-
-
 
     public void setBomb(boolean bomb) {
         this.bomb = bomb;

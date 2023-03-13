@@ -18,7 +18,8 @@ public class MainMineseeker {
             b.clickPosition(positionY, positionX);
             b.imprimir();
         }while(! b.getEndGame());     
-        System.out.println("\n\tEnd =(");
+        System.out.println("\n\tEnd of this game.");
+        sc.close();
     }
 }
 /*Implementa el juego buscaminas por línea de comandos.
