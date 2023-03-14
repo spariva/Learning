@@ -1,8 +1,6 @@
 package codeWars.fibonacci;
 import java.util.Scanner;
-
 import codeWars.fibonacci.src.Fibonacci;
-
 
 public class MainFibo {
     public static void main(String[] args) {
