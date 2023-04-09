@@ -44,7 +44,7 @@ public class Board {
     }
 
     public void randomizeBombPositions() {
-        for (int i = 0; i < TOTAL_BOMBS; i++){
+        for (int i = 0; i <= TOTAL_BOMBS; i++){
         board[(int)(Math.random()*ALTO)][(int)(Math.random()*ANCHO)].setBomb(true);
         }
     }
@@ -91,9 +91,7 @@ public class Board {
                 setEndGame(true);
             }
 
-            /*no sé si meter algo que cuente cuántas casillas quedan visibles, meter un static global que aumente por cada casilla visible y un if(contador==ANCHO*ALTO-TOTAL_MINES_AMOUNT). O un método para switchear entre picar celdas o marcar bombas. Pero seguiría entonces teniendo el problema de comprobar la victoria...
-
-            Molaría cambiar el ejercicio a ArrayList y que por cada pantalla resuelta se hiciera 1 fila y columna más grande... Bueno no tendría por qué ser ArrayList, tan solo incrementar ancho y alto.
+            /*no sé si consumiría menos la victoria teniendo un try catch en vez del doWhile
             */
         }
     }
