@@ -3,8 +3,8 @@ package ejemplo7agroeco;
 //import java.util.ArrayList;
 
 public abstract class Producto {
-    private final int F_CADUCIDAD = 2030;
-    private final int N_LOTE = 01;
+    private final int F_CADUCIDAD;
+    private final int N_LOTE;
     private String f_envasado;
     private String pais;
     private Temperatura temp;
@@ -12,7 +12,9 @@ public abstract class Producto {
      
 
     
-    public Producto(String f_envasado, String pais, Temperatura temp, String nombre) {
+    public Producto(int F_CADUCIDAD, int N_LOTE, String f_envasado, String pais, Temperatura temp, String nombre) {
+        this.F_CADUCIDAD = F_CADUCIDAD;
+        this.N_LOTE = N_LOTE;
         this.f_envasado = f_envasado;
         this.pais = pais;
         this.temp = temp;
