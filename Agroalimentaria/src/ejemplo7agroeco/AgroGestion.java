@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AgroGestion {
-    private final String nombre;
-    private List<Producto> productos = new ArrayList<>();
-    private List<Producto> freshProductos = new ArrayList<>();
-    private List<Producto> coldProductos = new ArrayList<>();
-    private List<Producto> frozenProductos = new ArrayList<>();
+     final String nombre;
+     List<Producto> productos = new ArrayList<>();
+     List<Producto> freshProductos = new ArrayList<>();
+     List<Producto> coldProductos = new ArrayList<>();
+     List<Producto> frozenProductos = new ArrayList<>();
 
 
     public AgroGestion(String nombre) {
