@@ -4,63 +4,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AgroGestion {
-     final String nombre;
-     List<Producto> productos = new ArrayList<>();
-     List<Producto> freshProductos = new ArrayList<>();
-     List<Producto> coldProductos = new ArrayList<>();
-     List<Producto> frozenProductos = new ArrayList<>();
+    String name;
+    List<Product> products;
+    List<Fresh> freshProducts;
+    List<Cold> coldProducts;
+    List<Frozen> frozenProducts;
 
 
-    public AgroGestion(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
-    }
-    public void setFreshProductos(List<Producto> freshProductos) {
-        this.freshProductos = freshProductos;
-    }
-    public void setColdProductos(List<Producto> coldProductos) {
-        this.coldProductos = coldProductos;
-    }
-    public void setFrozenProductos(List<Producto> frozenProductos) {
-        this.frozenProductos = frozenProductos;
+    public AgroGestion(String name) {
+        this.name = name;
+        this.products = new ArrayList<>();
+        this.freshProducts = new ArrayList<>();
+        this.coldProducts = new ArrayList<>();
+        this.frozenProducts = new ArrayList<>();
     }
 
 
-    public List<Producto> agregarProducto(Producto p) {
-        productos.add(p);
-        return productos;
+    public void addProduct(Product p) {
+        products.add(p);
     }
-    public List<Producto> agregarFreshProducto(Producto p) {
-        freshProductos.add(p);
-        return freshProductos;
+    public void addFreshProduct(Fresh p) {
+        products.add(p);
+        freshProducts.add(p);
     }
-    public List<Producto> agregarColdProducto(Producto p) {
-        productos.add(p);
-        return coldProductos;
+    public void addColdProduct(Cold p) {
+        products.add(p);
+        coldProducts.add(p);
     }
-    public List<Producto> agregarFrozenProducto(Producto p) {
-        productos.add(p);
-        return frozenProductos;
-    }
-
-    public List<Producto> getFreshProductos() {
-        return freshProductos;
-    }
-    public List<Producto> getColdProductos() {
-        return coldProductos;
-    }
-    public List<Producto> getFrozenProductos() {
-        return frozenProductos;
+    public void addFrozenProduct(Frozen p) {
+        products.add(p);
+        frozenProducts.add(p);
     }
     
 
     @Override
     public String toString() {
-        return "AgroGestión [productos=" + productos + ", freshProductos=" + freshProductos + ", coldProductos="
-                + coldProductos + ", frozenProductos=" + frozenProductos + "]";
+        String string = "AgroGestión [Has a total number of: " + products.size() + " products. /n";
+        if(!freshProducts.isEmpty()){
+            string += "The fresh ones are: ";
+            for(Product product : freshProducts) {
+                string += product.getName();
+            }
+        }
+        if(!coldProducts.isEmpty()){
+            string += "The cold ones are: ";
+            for(Product product : coldProducts) {
+                string += product.getName();
+            }
+        }
+        if(!frozenProducts.isEmpty()){
+            string += "The frozen ones are: ";
+            for(Product product : frozenProducts) {
+                string += product.getName();
+            }
+        }
+        return string;
     }
 
     

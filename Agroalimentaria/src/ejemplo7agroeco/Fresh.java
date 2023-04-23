@@ -1,20 +1,29 @@
 package ejemplo7agroeco;
 
-public class Fresh extends Producto{
+public class Fresh extends Product{
 
-    public Fresh(String f_envasado, String pais, Temperatura temp, String nombre) {
-        super(f_envasado, pais, temp, nombre);
+    public Fresh(String expiracyDate, int lotNumber, String packagingDate, String country, String name){
+        super(expiracyDate, lotNumber, packagingDate, country, name);
+        
     }
     
-    @Override
-    public void estropearse() {
-        System.out.println(this.getNombre() + " , muy fresco pero demasiado tiempo al sol.");
-        System.out.println("Su temperatura recomendada era: "+ this.getTemp() + " pero al ser fresco seguramente fuese por el envasado.");
-    }
+    
 
     @Override
     public String toString() {
-        return super.toString() + "este producto es fresco.";
+        return super.toString() + "this is a Fresh product. ";
+    }
+
+    @Override
+    public void rotting() {
+        //It will only rot in case the ExpiracyDate has already past.
+        
+    }
+
+    @Override
+    public String toCsvLine() {
+        
+        return null;
     }
     
     
