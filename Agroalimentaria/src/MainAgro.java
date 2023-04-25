@@ -27,6 +27,7 @@ public class MainAgro {
     }*/
 
     public static void main(String[] args) {
+        System.out.println("Name your company: ");
         String name = sc.nextLine();
         AgroGestion company = new AgroGestion(name);
 
