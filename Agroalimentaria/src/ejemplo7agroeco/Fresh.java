@@ -19,12 +19,4 @@ public class Fresh extends Product{
         //It will only rot in case the ExpiracyDate has already past.
         
     }
-
-    @Override
-    public String toCsvLine() {
-        
-        return null;
-    }
-    
-    
 }

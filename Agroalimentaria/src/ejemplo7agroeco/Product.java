@@ -8,7 +8,7 @@ public abstract class Product {
     String packagingDate;
     String country;
     String name;
-     
+    
 /**
  * Both parameters are final in order to avoid any change that might cause a health threat. 
  * For example, someone changing the expiracyDate to sell expired products.
@@ -37,7 +37,10 @@ public abstract class Product {
  */
     public abstract void rotting();
 
-    public abstract String toCsvLine();
+    
+    public String toCsvLine(){
+        return name + "," + EXPIRACY_DATE + "," + LOT_NUMBER + "," + packagingDate + "," + country;
+    }
 
     @Override
     public String toString() {

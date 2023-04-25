@@ -1,5 +1,8 @@
 package ejemplo7agroeco;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +64,50 @@ public class AgroGestion {
         return string;
     }
 
-    
+    /**
+     * So I create a new object, which reference is "writer".
+     * Basically a BufferedWriter with a FileWriter as a parameter (for byte transform efficiency etc).
+     * 
+     * I write the different AgroGestion lists' in case they are not empty. 
+     * I close the writer and handle the possible IOException as well. 
+     */
+    public void writeCSV(){
+        try {
+            BufferedWriter writerProductsList = new BufferedWriter(new FileWriter("Products.txt"));
+            BufferedWriter writerFreshList = new BufferedWriter(new FileWriter("Fresh.txt"));
+            BufferedWriter writerColdList = new BufferedWriter(new FileWriter("Cold.txt"));
+            BufferedWriter writerFrozenList = new BufferedWriter(new FileWriter("Frozen.txt"));
+
+            if(!products.isEmpty()){
+                for (Product p : products) {
+                    writerProductsList.write(p.toCsvLine());
+                }
+                writerProductsList.close();
+            }
+            if(!freshProducts.isEmpty()){
+                for (Product p : freshProducts) {//Would it be better Fresh rather than Product?
+                    writerFreshList.write(p.toCsvLine());
+                }
+                writerFreshList.close();
+            }
+            if(!coldProducts.isEmpty()){
+                for (Product p : coldProducts) {
+                    writerColdList.write(p.toCsvLine());
+                }
+                writerColdList.close();
+            }
+            if(!frozenProducts.isEmpty()){
+                for (Product p : frozenProducts) {
+                    writerFrozenList.write(p.toCsvLine());//aquí daría error porque hay tres tipos diferentes etc
+                }
+                writerFrozenList.close();
+            }
+        } catch (IOException ioe) {
+            System.out.println("La que has liao pollito...");
+            ioe.printStackTrace();
+        }
+        
+
+    }
     
 }

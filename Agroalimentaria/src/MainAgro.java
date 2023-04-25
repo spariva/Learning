@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class MainAgro { 
     static Scanner sc = new Scanner(System.in);
 
-    private static void getMenu(){
+    /*private static void getMenu(){
         sc.nextLine();
         int option = sc.nextInt();
         sc.nextLine();//clean buffer.
@@ -18,20 +18,34 @@ public class MainAgro {
         System.out.println("Press any other number to exit.");
         switch (option) {
             case 1:
-                
+                company.writeCSV();
             case 2:
-
+                company.readCSV(); 
             default: 
                 System.out.println("Bye bye");
         }
-    }
+    }*/
 
     public static void main(String[] args) {
         String name = sc.nextLine();
         AgroGestion company = new AgroGestion(name);
 
         do{
-            getMenu();
+            //getMenu();
+            sc.nextLine();
+        int option = sc.nextInt();
+        sc.nextLine();//clean buffer.
+        System.out.println("Press 1 to write a file.");
+        System.out.println("Press 2 to read the file.");
+        System.out.println("Press any other number to exit.");
+        switch (option) {
+            case 1:
+                company.writeCSV();
+            case 2:
+                company.readCSV(); 
+            default: 
+                System.out.println("Bye bye");
+        }
         }while(sc.nextInt() != 1 && sc.nextInt() != 2);
         
         System.out.println(company);
