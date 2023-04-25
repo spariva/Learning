@@ -9,5 +9,5 @@ public abstract class Frozen extends Product{
         this.temperature = temperature;
     }
 
-    public abstract void rotting();//not sure about this one.
+    public abstract void rotting();//not sure about this one. I mean would be the same if I just delete this line?
 }

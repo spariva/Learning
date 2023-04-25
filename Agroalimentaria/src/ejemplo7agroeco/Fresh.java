@@ -11,7 +11,7 @@ public class Fresh extends Product{
 
     @Override
     public String toString() {
-        return super.toString() + "this is a Fresh product. ";
+        return super.toString();
     }
 
     @Override

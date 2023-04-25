@@ -1,8 +1,11 @@
 package ejemplo7agroeco;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,5 +112,24 @@ public class AgroGestion {
         
 
     }
+
+    public void readCSV(){
+        try {
+            BufferedReader reader = new BufferedReader(FileReader("Products.txt"));
+            String line;
+            while((line = reader.readLine()) != null){
+                System.out.println(line);
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("My name is Charles Baker, I can´t read...");
+            e.printStackTrace();
+        }
+    }
+
+
+    /*private Reader FileReader(String string) {
+        return null;
+    }*/
     
 }
