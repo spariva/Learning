@@ -115,7 +115,7 @@ public class AgroGestion {
 
     public void readCSV(){
         try {
-            BufferedReader reader = new BufferedReader(FileReader("Products.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("Products.txt"));
             String line;
             while((line = reader.readLine()) != null){
                 System.out.println(line);
