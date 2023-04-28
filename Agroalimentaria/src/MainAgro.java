@@ -31,14 +31,20 @@ public class MainAgro {
         String name = sc.nextLine();
         AgroGestion company = new AgroGestion(name);
 
+
+        Fresh manzana = new Fresh("10-03-2023", 02, "españita", "Spain", "Manzana");
+        company.addProduct(manzana);
+        company.addFreshProduct(manzana);
+
+  
         do{
             //getMenu();
-            sc.nextLine();
-        int option = sc.nextInt();
-        sc.nextLine();//clean buffer.
-        System.out.println("Press 1 to write a file.");
-        System.out.println("Press 2 to read the file.");
-        System.out.println("Press any other number to exit.");
+            System.out.println("Press 1 to write a file.");
+            System.out.println("Press 2 to read the file.");
+            System.out.println("Press any other number to exit.");
+            int option = sc.nextInt();
+            sc.nextLine();//clean buffer.
+
         switch (option) {
             case 1:
                 company.writeCSV();
@@ -47,23 +53,23 @@ public class MainAgro {
             default: 
                 System.out.println("Bye bye");
         }
-        }while(sc.nextInt() != 1 && sc.nextInt() != 2);
+        }while(sc.nextInt() != 1 || sc.nextInt() != 2);
         
         System.out.println(company);
        
 /*         List<Product> productos = new ArrayList<Product>();
-        List<Fresh> freshProductos = new ArrayList<Fresh>();
+        List<Fresh> freshProduct = new ArrayList<Fresh>();
         Fresh manzana = new Fresh("2023", "españita", Temperatura.AMBIENTE, "Manzana");
         productos.add(manzana);
-        empresa.agregarFreshProducto(manzana);
+        company.addFreshProduct(manzana);
 
-        freshProductos.add(0, manzana);
+        freshProduct.add(0, manzana);
         Product legumbre = new Fresh("2023", "españita", Temperatura.AMBIENTE, "Garbanzos");
         productos.add(legumbre);
-        freshProductos.add(0, (Fresh) legumbre);
+        freshProduct.add(0, (Fresh) legumbre);
         System.out.println(manzana);
         System.out.println(legumbre);
-        System.out.println(freshProductos);
+        System.out.println(freshProduct);
 
         Product cruason = new Cold("2023", "La France", Temperatura.FRÍA, "123", "Un croisan");
         Product cafe = new Cold("2023", "Colombia", Temperatura.FRÍA, "121", "Café Estrella");
