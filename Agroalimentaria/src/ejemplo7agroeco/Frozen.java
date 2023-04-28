@@ -1,20 +1,13 @@
 package ejemplo7agroeco;
 
-public class Frozen extends Producto{
+public abstract class Frozen extends Product{
+    float temperature;
 
-    public Frozen(String f_envasado, String pais, Temperatura temp, String nombre) {
-        super(f_envasado, pais, temp, nombre);
-    }
-    
-    @Override
-    public void estropearse() {
-        System.out.println(this.getNombre() + " , se ha derretido...");
-        System.out.println("Su temperatura recomendada era: " + Temperatura.CONGELADA + " pero la del producto era " + this.getTemp());
-
+    public Frozen(String expiracyDate, int lotNumber, String packagingDate, String country, String name,
+            float temperature) {
+        super(expiracyDate, lotNumber, packagingDate, country, name);
+        this.temperature = temperature;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + " Este producto es congelado ";
-    }
+    public abstract void rotting();//not sure about this one. I mean would be the same if I just delete this line?
 }

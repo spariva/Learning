@@ -1,29 +1,41 @@
 package ejemplo7agroeco;
 
-public class Cold extends Producto{
-    private String cod_supervision;
 
-    public Cold(String f_envasado, String pais, Temperatura temp, String cod_supervision, String nombre) {
-        super(f_envasado, pais, temp, nombre);
-        this.cod_supervision = cod_supervision;
+public class Cold extends Product{
+    String supervisionCode;
+    float temperature;
+
+    
+    public Cold(String expiracyDate, int lotNumber, String packagingDate, String country, String name,
+            String supervisionCode, float temperature) {
+        super(expiracyDate, lotNumber, packagingDate, country, name);
+        this.supervisionCode = supervisionCode;
+        this.temperature = temperature;
     }
 
-    public String getCod_supervision() {
-        return cod_supervision;
-    }
-
-    public void setCod_supervision(String cod_supervision) {
-        this.cod_supervision = cod_supervision;
-    }
-
-    @Override
-    public void estropearse() {
-       System.out.println(this.getNombre() + " , frío ya no está...");
-       System.out.println("Su temperatura recomendada era: "+ this.getTemp());
-    }
 
     @Override
     public String toString() {
-        return super.toString() + "este producto es frío.";
+        return "Cold [supervisionCode=" + supervisionCode + ", temperature=" + temperature + "] + this is a Cold product. ";
     }
+
+
+    @Override
+    public void rotting() {
+        //It will rot in case the ExpiracyDate has already past or if the temperature descends.
+        System.out.println("It´s rotten");
+    }
+
+
+    @Override
+    public String toCsvLine() {
+        return name + "," + EXPIRACY_DATE + "," + LOT_NUMBER + "," + packagingDate + "," + country + "," + supervisionCode + "," + temperature;
+    }
+
+    
+    
+
+
+
+
 }
