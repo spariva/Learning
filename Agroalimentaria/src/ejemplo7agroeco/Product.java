@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public abstract class Product {
     final LocalDate EXPIRACY_DATE;
     final int LOT_NUMBER;
+    final static String LOT_REGEX = "^[A-Z]{2}-[0-9]{4}-[0-9]{1,4}$";
     String packagingDate;
     String country;
     String name;
@@ -48,5 +49,8 @@ public abstract class Product {
                 + packagingDate + ", country=" + country + ", name=" + name + "]";
     }
 
+    if(!LOT_NUMBER.matches(LOT_REGEX)){
+        throw new InvalidParameterException("Lot number format not valid, should match: " + LOT_REGEX);
+    }
     
 }
