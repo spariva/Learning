@@ -20,7 +20,7 @@ public class FrozenNitro extends Frozen{
     }
 
     public FrozenNitro(String expiracyDate, String lotNumber, String packagingDate, String country, String name,
-            float temperature, FreezingMethodsEnum metodoCongelacion, int segundosExposicion, MaterialTypesEnum material) throws InvalidParameterException {
+            float temperature, FreezingMethodsEnum metodoCongelacion, int segundosExposicion, MaterialTypesEnum material) throws InvalidParameterExceptione {
         super(expiracyDate, lotNumber, packagingDate, country, name, temperature);
         this.FREEZING_METHOD = metodoCongelacion;
         this.exposureInSeconds = segundosExposicion;

@@ -18,14 +18,14 @@ public abstract class Product implements Comparable<Product>{
  * For example, someone changing the expiracyDate to sell expired products.
  * @param expiracyDate 
  * @param lotNumber 
- * @throws InvalidParameterException
+ * @throws InvalidParameterExceptione
  * 
  */
-    public Product(String expiracyDate, String lotNumber, String packagingDate, String country, String name) throws InvalidParameterException {
+    public Product(String expiracyDate, String lotNumber, String packagingDate, String country, String name) throws InvalidParameterExceptione {
         DateTimeFormatter dF = DateTimeFormatter.ofPattern("dd-M-yyyy", Locale.ENGLISH);
         this.EXPIRACY_DATE = LocalDate.parse(expiracyDate, dF);
         if(!lotNumber.matches(LOT_REGEX)){
-            throw new InvalidParameterException("Lot number format not valid, should match: " + LOT_REGEX);
+            throw new InvalidParameterExceptione("Lot number format not valid, should match: " + LOT_REGEX);
         }
         this.LOT_NUMBER = lotNumber;
         this.packagingDate = LocalDate.parse(packagingDate, dF);

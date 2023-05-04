@@ -17,7 +17,7 @@ public class MainAgro {
             Fresh manzana = new Fresh("10-02-2023", "02", "01-02-2023", "Spain", "Manzana");
             company.addProduct(manzana);
             company.addFreshProduct(manzana);
-        } catch (InvalidParameterException iPE) {
+        } catch (InvalidParameterExceptione iPE) {
             iPE.getMessage();
         }
         
@@ -25,7 +25,7 @@ public class MainAgro {
             Cold cruason = new Cold("10-03-2023", "02", "05-10-2023", "France", "Un croisan", "324r", 24.5f);
             company.addProduct(cruason);
             company.addColdProduct(cruason);
-        } catch (InvalidParameterException iPE) {
+        } catch (InvalidParameterExceptione iPE) {
             iPE.getMessage();
         }
         //manzana.compareTo(cruason);

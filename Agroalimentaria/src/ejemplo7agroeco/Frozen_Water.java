@@ -5,7 +5,7 @@ public class Frozen_Water extends Frozen{
 
     
     public Frozen_Water(String expiracyDate, String lotNumber, String packagingDate, String country, String name,
-            float temperature, int salinidadPorcentaje) throws InvalidParameterException {
+            float temperature, int salinidadPorcentaje) throws InvalidParameterExceptione {
         super(expiracyDate, lotNumber, packagingDate, country, name, temperature);
         this.SalinityPercentage = salinidadPorcentaje;
     }

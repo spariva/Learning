@@ -8,7 +8,7 @@ public class Frozen_Air extends Frozen{
     
 
     public Frozen_Air(String expiracyDate, String lotNumber, String packagingDate, String country, String name,
-            float temperature, int nytrogen, int oxygen, int carbonDyoxide, int steamWater) throws InvalidParameterException {
+            float temperature, int nytrogen, int oxygen, int carbonDyoxide, int steamWater) throws InvalidParameterExceptione {
         super(expiracyDate, lotNumber, packagingDate, country, name, temperature);
         this.nytrogen = nytrogen;
         this.oxygen = oxygen;
