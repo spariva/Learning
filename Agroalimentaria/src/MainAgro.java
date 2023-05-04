@@ -28,6 +28,7 @@ public class MainAgro {
         } catch (InvalidParameterException iPE) {
             iPE.getMessage();
         }
+        //manzana.compareTo(cruason);
         do{
             printMenu();
             int option = sc.nextInt();
