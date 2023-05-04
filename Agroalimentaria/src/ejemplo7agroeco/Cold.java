@@ -6,8 +6,8 @@ public class Cold extends Product{
     float temperature;
 
     
-    public Cold(String expiracyDate, int lotNumber, String packagingDate, String country, String name,
-            String supervisionCode, float temperature) {
+    public Cold(String expiracyDate, String lotNumber, String packagingDate, String country, String name,
+            String supervisionCode, float temperature) throws InvalidParameterException {
         super(expiracyDate, lotNumber, packagingDate, country, name);
         this.supervisionCode = supervisionCode;
         this.temperature = temperature;
