@@ -115,7 +115,7 @@ public class AgroGestion {
 
     public void readCSV(){
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("Products.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("Products.csv"));
             String line;
             while((line = reader.readLine()) != null){
                 System.out.println(line);
@@ -127,6 +127,9 @@ public class AgroGestion {
         }
     }
 
+    public String reorganizeByName(){
+        //no sé si quiero que haga una lista o qué 
+    }
 
     /*private Reader FileReader(String string) {
         return null;
