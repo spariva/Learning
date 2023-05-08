@@ -15,7 +15,7 @@ public class MainAgro {
         AgroGestion company = new AgroGestion(name);
 
         try {
-            Fresh manzana = new Fresh("10-02-2023", "02", "01-02-2023", "Spain", "Manzana");
+            Fresh manzana = new Fresh("10-02-2023", "ZA-123-02", "01-02-2023", "Spain", "Manzana");
             company.addProduct(manzana);
             company.addFreshProduct(manzana);
         } catch (InvalidParameterExceptione iPE) {
