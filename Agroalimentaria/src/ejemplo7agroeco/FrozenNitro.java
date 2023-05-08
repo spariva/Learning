@@ -61,7 +61,7 @@ public class FrozenNitro extends Frozen{
 
     @Override
     public String toCsvLine() {
-        return name + "," + EXPIRACY_DATE + "," + LOT_NUMBER + "," + packagingDate + "," + country + "," + FREEZING_METHOD + "," + exposureInSeconds + "," + MATERIAL;
+        return name + "," + expiracyDate + "," + lotNumber + "," + packagingDate + "," + country + "," + FREEZING_METHOD + "," + exposureInSeconds + "," + MATERIAL;
     }
 
     

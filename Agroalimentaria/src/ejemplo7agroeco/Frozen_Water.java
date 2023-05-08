@@ -31,7 +31,7 @@ public class Frozen_Water extends Frozen{
 
     @Override
     public String toCsvLine() {
-        return name + "," + EXPIRACY_DATE + "," + LOT_NUMBER + "," + packagingDate + "," + country + "," + SalinityPercentage;
+        return name + "," + expiracyDate + "," + lotNumber + "," + packagingDate + "," + country + "," + SalinityPercentage;
     }
 
 }

@@ -31,7 +31,7 @@ public class Frozen_Air extends Frozen{
 
     @Override
     public String toCsvLine() {
-        return name + "," + EXPIRACY_DATE + "," + LOT_NUMBER + "," + packagingDate + "," + country + "," + nytrogen + "," + oxygen + "," + carbonDyoxide + "," + steamWater;
+        return name + "," + expiracyDate + "," + lotNumber + "," + packagingDate + "," + country + "," + nytrogen + "," + oxygen + "," + carbonDyoxide + "," + steamWater;
     }
 
     

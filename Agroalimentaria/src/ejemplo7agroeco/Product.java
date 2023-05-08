@@ -5,9 +5,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Locale;
 
-public abstract class Product implements Comparable<Product>{
-    final LocalDate EXPIRACY_DATE;
-    final String LOT_NUMBER;
+public abstract class Product{
+    LocalDate expiracyDate;
+    String lotNumber;
     final static String LOT_REGEX = "^[A-Z]{2}-[0-9]{4}-[0-9]{1,4}$";
     LocalDate packagingDate;
     String country;
@@ -23,11 +23,11 @@ public abstract class Product implements Comparable<Product>{
  */
     public Product(String expiracyDate, String lotNumber, String packagingDate, String country, String name) throws InvalidParameterExceptione {
         DateTimeFormatter dF = DateTimeFormatter.ofPattern("dd-M-yyyy", Locale.ENGLISH);
-        this.EXPIRACY_DATE = LocalDate.parse(expiracyDate, dF);
+        this.expiracyDate = LocalDate.parse(expiracyDate, dF);
         if(!lotNumber.matches(LOT_REGEX)){
             throw new InvalidParameterExceptione("Lot number format not valid, should match: " + LOT_REGEX);
         }
-        this.LOT_NUMBER = lotNumber;
+        this.lotNumber = lotNumber;
         this.packagingDate = LocalDate.parse(packagingDate, dF);
         this.country = country;
         this.name = name;
@@ -48,31 +48,26 @@ public abstract class Product implements Comparable<Product>{
 
     
     public String toCsvLine(){
-        return name + "," + EXPIRACY_DATE + "," + LOT_NUMBER + "," + packagingDate + "," + country;
+        return name + "," + expiracyDate + "," + lotNumber + "," + packagingDate + "," + country;
     }
 
     @Override
     public String toString() {
-        return "Product [EXPIRACY_DATE=" + EXPIRACY_DATE + ", LOT_NUMBER=" + LOT_NUMBER + ", packagingDate="
+        return "Product [EXPIRACY_DATE=" + expiracyDate + ", LOT_NUMBER=" + lotNumber + ", packagingDate="
                 + packagingDate + ", country=" + country + ", name=" + name + "]";
     }
-
-
-    @Override
-    public int compareTo(Product p) {
-        if(this.EXPIRACY_DATE.isBefore(p.EXPIRACY_DATE)){
-            return -1;
-        }else if(this.EXPIRACY_DATE.isAfter(p.EXPIRACY_DATE)){
-            return 1;
-          }
-        return 0;
-    }
-    
 
     public static final Comparator<Product> BY_NAME = new Comparator<Product>() {
         @Override
         public int compare(Product p1, Product p2) {
             return p1.name.compareTo(p2.name);
+        }
+    };
+
+    public static final Comparator<Product> BY_EXPIRACY_DATE = new Comparator<Product>() {
+        @Override
+        public int compare(Product p1, Product p2) {
+            return p1.packagingDate.compareTo(p2.expiracyDate);
         }
     };
 

@@ -29,7 +29,7 @@ public class Cold extends Product{
 
     @Override
     public String toCsvLine() {
-        return name + "," + EXPIRACY_DATE + "," + LOT_NUMBER + "," + packagingDate + "," + country + "," + supervisionCode + "," + temperature;
+        return name + "," + expiracyDate + "," + lotNumber + "," + packagingDate + "," + country + "," + supervisionCode + "," + temperature;
     }
 
     
