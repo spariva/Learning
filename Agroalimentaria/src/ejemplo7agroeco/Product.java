@@ -77,5 +77,12 @@ public abstract class Product{
             return p1.packagingDate.compareTo(p2.packagingDate);
         }
     };
+    public static final Comparator<Product> LALALA = new Comparator<Product>() {
+        @Override
+        public int compare(Product o1, Product o2) {
+            return o1.country.compareTo(o2.country);
+        }
+        
+    };
 
 }

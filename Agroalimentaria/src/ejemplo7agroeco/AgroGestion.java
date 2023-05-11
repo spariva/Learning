@@ -171,5 +171,15 @@ public class AgroGestion {
         }
         return string;
     }
+
+    public String organizeByCountry(){
+        String cadena = null;
+        List<Product> products2 = new ArrayList<>(products);
+        Collections.sort(products2, Product.LALALA);
+        for (Product product : products2) {
+            cadena += product;
+        }
+        return cadena;
+    }
     
 }
