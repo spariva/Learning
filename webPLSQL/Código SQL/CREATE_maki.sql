@@ -1,3 +1,6 @@
+connect system/system
+set serveroutput on
+
 ALTER SESSION SET NLS_DATE_FORMAT='DD/MM/YYYY';
 
 DROP TABLE FACTURA CASCADE CONSTRAINT;
