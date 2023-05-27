@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="contact.css"/>
+    <title>Formulario</title>
+</head>
+<body>
+  <h1 id="title">Escríbenos =)</h1>
+  <p id="description">Ayúdanos a mejorar, pero con empatía</p>
+  <form id="survey-form" action="https://survey-form.com" method="post">
+      <div class="container">
+          <label for="name" id="name-label">Nombre
+            <input type="text" name="name" id="name" class="name" placeholder="Nombre" required/>
+          </label>
+          <label for="email" id="email-label">Mail
+            <input type="email" name="email" id="email" class="email" placeholder="RealMail@hotmail.com" required/>
+          </label>
+          <label id="number-label"> Edad <span style="color: rgb(245, 226, 222);">(optional)</span>
+            <input type="number" name="age" id="number" class="name" min="18" max="120" placeholder="Min 18" required/>
+          </label>
+          <label for="name">Introduzca factura o albarán:
+            <input type="file" name="profile-pic" id="profile-pic" class="profile-pic"/>
+          </label>
+          <hr>
+          <label>¿Cómo nos has conocido?</label>
+          <select id="dropdown">
+            <option value="Aries">Por redes</option>
+            <option value="Ninguno">Gracias a une amigue</option>
+            <option value="Géminis">De pura casualidad</option>
+            <option value="Fuego">Publicidad</option>
+          </select>
+          <p class="elemento"> ¿Cómo ha sido tu experincia? </p>
+            <label class="elemental">
+              Mala <input type="radio" name="elemento" value="fuego" class="input-radio" disabled/>
+            </label>
+            <label class="elemental">
+              Regular<input type="radio" name="elemento" value="aire" class="input-radio"/>
+            </label>  
+            <label class="elemental">
+              Buena<input type="radio" name="elemento" value="tierra" class="input-radio"/>
+            </label>  
+            <label class="elemental">
+              Genial =)<input type="radio" name="elemento" value="agua" class="input-radio"/>
+            <br><br>
+            </label>
+            <label class="textarea">¿Cuál es tu producto favorito?
+              <input type="textarea" name="textarea" class="textarea">
+            </label>
+    
+            <p>¿Algo que nos quieras decir?</p>
+            <textarea id="textarea" cols="40" rows="4"></textarea>
+              
+            
+            <p class="vs"> ¿Nos volverás a comprar dentro de poco? 
+                Porque tenemos un descuento para ti. </p>
+            <label class="vsCheck">
+              Obvio <input type="checkbox" name="vs" value="Capri" class="input-check"/>
+            </label>
+            <label class="vsCheck">
+              No =(<input type="checkbox" name="vs" value="Piscis" class="input-check"/>
+            </label>  
+          
+          
+          
+      </div>
+      
+      <input type="submit" id="submit" class="submit-button"/>
+  </form>
+      
+  
+</body>
+</html>

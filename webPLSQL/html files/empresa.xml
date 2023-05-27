@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<productos>
+  <producto>
+    <nombre>PROGESTERONA</nombre>
+    <código>000000001</código>
+    <precio>1</precio>
+  </producto>
+  <producto>
+    <nombre>ESTRADIOL</nombre>
+    <código>000000010</código>
+    <precio>2</precio>
+  </producto>
+  <producto>
+    <nombre>DEPAKINE</nombre>
+    <código>000000100</código>
+    <precio>3</precio>
+  </producto>
+    <producto>
+    <nombre>DEPAKINE</nombre>
+    <código>000000100</código>
+    <precio>3</precio>
+  </producto>  <producto>
+    <nombre>HEURA</nombre>
+    <código>000000011</código>
+    <precio>10</precio>
+  </producto>  <producto>
+    <nombre>LECHE AVENA</nombre>
+    <código>000000110</código>
+    <precio>1</precio>
+  </producto>  <producto>
+    <nombre>LECHE SOJA</nombre>
+    <código>000000111</código>
+    <precio>1</precio>
+      </producto>  <producto>
+    <nombre>TESTOGEL</nombre>
+    <código>001100000</código>
+    <precio>2</precio>
+  </producto>  <producto>
+    <nombre>MAKE UP</nombre>
+    <código>000100001</código>
+    <precio>5</precio>
+  </producto>
+  <producto>
+    <nombre>BINDER</nombre>
+    <código>000100000</código>
+    <precio>12</precio>
+  </producto>
+  <producto>
+    <nombre>BANDERA</nombre>
+    <código>0001001111</código>
+    <precio>4</precio>
+  </producto>
+  
+</productos>

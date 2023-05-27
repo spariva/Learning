@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+    <title>Introducción a SQL</title>
+    <style>
+      /* Estilo de la barra de navegación */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        transition: opacity 0.5s;
+      }
+      
+      /* Estilo de los enlaces dentro de la barra de navegación */
+      nav a {
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+      
+      /* Cambia el color de los enlaces al pasar el ratón por encima */
+      nav a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+      
+      /* Estilo del logo */
+      .logo {
+        height: 40px;
+        margin-right: 20px;
+      }
+      
+      /* Estilo de las secciones */
+      section {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        padding: 20px;
+        border: 1px solid #ddd;
+      }
+      
+      /* Estilo de los títulos de las secciones */
+      section h2 {
+        margin-top: 0;
+      }
+      body {
+			font-family: Arial, sans-serif;
+			padding: 20px;
+		}
+		
+		h1 {
+			text-align: center;
+		}
+		
+		ol {
+			list-style: decimal;
+			margin-left: 40px;
+			font-size: 1.2em;
+		}
+		
+		li {
+			margin-bottom: 10px;
+		}
+		
+		dt {
+			font-weight: bold;
+			margin-bottom: 5px;
+		}
+		
+		dd {
+			margin-left: 20px;
+			margin-bottom: 10px;
+		}
+    </style>
+  </head>
+  <body>
+    <nav>
+      <img src="Imágenes/LOGO.PNG" alt="Logo" class="logo">
+      <div class="nav-links">
+        <a href="#SQL">Visión general</a>
+        <a href="#syntax">Sintaxis básica</a>
+        <a href="#dml">Ejemplos DML</a>
+        <a href="#resources">Recursos</a>
+      </div>
+    </nav>
+    
+    <section id="SQL">
+    <h2>¿Qué es SQL?</h2>
+    <p>SQL (Structured Query Language) es un lenguaje de programación utilizado para gestionar y manipular bases de datos relacionales. Se utiliza comúnmente en el desarrollo web y aplicaciones empresariales para organizar y analizar grandes cantidades de datos.</p>    
+
+    <p>SQL fue uno de los primeros lenguajes comerciales para el <a href="/wiki/Modelo_relacional" title="Modelo relacional">modelo relacional</a> de <a href="/wiki/Edgar_Frank_Codd" title="Edgar Frank Codd">Edgar Frank Codd</a> como se describió en su artículo de investigación de 1970 <i>El modelo relacional de datos para grandes bancos de datos compartidos</i>. A pesar de no adherirse totalmente al modelo relacional descrito por Codd, pasó a ser el lenguaje de base de datos más usado.
+    </section>
+
+    <section>
+    <h2>Historia:</h2>
+    <p>En 1970, <a href="/wiki/Edgar_Frank_Codd" title="Edgar Frank Codd">E. F. Codd</a> propone el <a href="/wiki/Modelo_relacional" title="Modelo relacional">modelo relacional</a> y asociado a este un sublenguaje de acceso a los <a href="/wiki/Dato" title="Dato">datos</a> basado en el cálculo de predicados.
+      <br>
+    Basándose en estas ideas, los laboratorios de <a href="/wiki/IBM" title="IBM">IBM</a> definieron el lenguaje <a href="/wiki/SEQUEL" class="mw-redirect" title="SEQUEL">SEQUEL</a> (Structured English Query Language) que más tarde fue ampliamente implementado por el <a href="/wiki/Sistema_de_gesti%C3%B3n_de_bases_de_datos" title="Sistema de gestión de bases de datos">sistema de gestión de bases de datos</a> (SGBD) experimental <a href="/wiki/System_R" title="System R">System R</a>, desarrollado en 1977 también por IBM. Sin embargo, fue <a href="/wiki/Oracle_Corporation" title="Oracle Corporation">Oracle</a> quien lo introdujo por primera vez en 1979 en un producto comercial.</p>
+  <hr>
+        El instituto ANSI (American Standard Institute) adopto SQL como estandar para la gestión de bases de datos relacionales en 1986, y en 1987 lo adopta ISO (International Standardization Organization). Algunas de sus sentencias las adoptan otros lenguajes como VisualBasic.</p>
+
+    <p><ul>Características:
+        <li>Sirve a todo tipo de usuarios: administradores, desarrolladores y usuarios normales.</li>
+        <li>Permite hacer cualquier consulta de datos especificando qué se quiere, no dónde ni cómo.    </li>
+        <li>No sólo es un lenguaje de consulta, tambien de definición, actualización y control de datos.</li></ul></p>
+
+    </section>
+
+		
+  <section>
+	<h2>Tipos de datos de SQL</h2>
+	<ol>
+		<li>
+			<dt>CHAR</dt>
+			<dd>Caracteres de longitud fija, con una longitud máxima definida por el usuario.</dd>
+		</li>
+		<li>
+			<dt>VARCHAR o VARCHAR2</dt>
+			<dd>Caracteres de longitud variable, con una longitud máxima definida por el usuario.</dd>
+		</li>
+		<li>
+			<dt>NUMBER</dt>
+			<dd>Se almacenan datos numéricos tanto enteros como decimales con o sin signo.
+        </dd>
+		</li>
+		<li>
+			<dt>LONG</dt>
+			<dd>Almacena cadenas de caracteres de longitud variable que contengan hasta 2 giga de información. Se suele utilizar para almacenar textos.
+        <ul>
+          <li>Una columna por tabla</li>
+          <li>No puede aparecer en restricciones de integridad</li>
+          <li>No sirve para indexar</li>
+          <li>No se puede utilizar como argumento de funciones</li>
+          <li>No se puede utilizar en algunas cláusulas</li>
+          <li>No se puede usar como subconsultas en la creación de tablas</li>
+        </ul>
+      </dd>
+		</li>
+		<li>
+			<dt>DATE</dt>
+			<dd>Sirve para almacenar información de fechas y horas.
+        Por omisión el formato para fecha es DD/MM/YY.
+        </dd>
+		</li>
+		<li>
+			<dt>RAW y LONG RAW</dt>
+			<dd>Sirven para almacenar datos binarios
+        RAW es del tipo VARCHAR” pero almacena cadenas de bytes
+        LONG RAW es del tipo LONG, sirve para almacenar gráficos, sonidos, etc.,
+        RAW admite indexación, LONG RAW no.
+        Tamaño máximo RAW – 255 bytes y LONG RAW – 2 Gigabytes
+        </dd>
+		</li>
+    <li>
+			<dt>ROWID</dt>
+			<dd> Cadena hexadecimal que representa la dirección de una fila. 
+        </dd>
+		</li>
+	</ol>
+</section>
+
+    
+    <section id="syntax">
+      <h2>Sintaxis básica</h2>
+      <p>SQL utiliza un conjunto de comandos para manipular datos en una base de datos. 
+        <p></p>Los comandos más utilizados son:</p>
+      <ul>
+        <li>SELECT - recupera datos de una tabla</li>
+        <li>INSERT - agrega nuevos datos a una tabla</li>
+        <li>UPDATE - modifica datos existentes en una tabla</li>
+        <li>DELETE - elimina datos de una tabla</li>
+      </ul>
+    </section>
+    
+    <section id="DML">
+      <h2><span id="Lenguaje_de_manipulaci.C3.B3n_de_datos_DML_.28Data_Manipulation_Language.29"></span><span class="mw-headline" id="Lenguaje_de_manipulación_de_datos_DML_(Data_Manipulation_Language)">Lenguaje de manipulación de datos DML (Data Manipulation Language)</span></span></h2>
+<p>El lenguaje de manipulación de datos (<i>Data Manipulation Language</i>, o <i>DML</i> en inglés) es el que permite a los usuarios llevar a cabo las tareas de consulta o manipulación de los datos, organizados por el modelo de datos adecuado.<sup id="cite_ref-Rockoff_7-1" class="reference separada"><a href="#cite_note-Rockoff-7"><span class="corchete-llamada">[</span>7<span class="corchete-llamada">]</span></a></sup>&#8203;En SQL incluye órdenes para seleccionar, insertar, actualizar y borrar los datos. Existen cuatro operaciones básicas: SELECT, INSERT, UPDATE y DELETE.
+</p>
+<h3><span id="SELECT_.28Seleccionar.29"></span><span class="mw-headline" id="SELECT_(Seleccionar)">SELECT (Seleccionar)</span></span></h3>
+<p>La sentencia <b>SELECT</b> nos permite consultar los datos almacenados en una tabla de la base de datos.
+</p>
+<h4><span id="Forma_b.C3.A1sica"></span><span class="mw-headline" id="Forma_básica">Forma básica</span></h4>
+<div class="mw-highlight mw-highlight-lang-sql mw-content-ltr" dir="ltr"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="p">[</span><span class="err">{</span><span class="k">ALL</span><span class="o">|</span><span class="k">DISTINCT</span><span class="err">}</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="o">&lt;</span><span class="n">nombre_campo</span><span class="o">&gt;</span><span class="p">[,</span><span class="w"> </span><span class="o">&lt;</span><span class="n">nombre_campo</span><span class="o">&gt;</span><span class="p">...]</span><span class="w"></span>
+
+<span class="k">FROM</span><span class="w"> </span><span class="err">{</span><span class="o">&lt;</span><span class="n">nombre_tabla</span><span class="o">&gt;|&lt;</span><span class="n">nombre_vista</span><span class="o">&gt;</span><span class="err">}</span><span class="p">[,</span><span class="w"></span>
+<span class="w">    </span><span class="err">{</span><span class="o">&lt;</span><span class="n">nombre_tabla</span><span class="o">&gt;|&lt;</span><span class="n">nombre_vista</span><span class="o">&gt;</span><span class="err">}</span><span class="p">...]</span><span class="w"></span>
+
+<span class="p">[</span><span class="k">WHERE</span><span class="w"> </span><span class="o">&lt;</span><span class="n">condición</span><span class="o">&gt;</span><span class="w"> </span><span class="p">[</span><span class="err">{</span><span class="k">AND</span><span class="o">|</span><span class="k">OR</span><span class="err">}</span><span class="w"> </span><span class="o">&lt;</span><span class="n">condición</span><span class="o">&gt;</span><span class="p">...]]</span><span class="w"></span>
+
+<span class="p">[</span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="o">&lt;</span><span class="n">nombre_campo</span><span class="o">&gt;</span><span class="p">[,</span><span class="w"> </span><span class="o">&lt;</span><span class="n">nombre_campo</span><span class="o">&gt;</span><span class="p">...]]</span><span class="w"></span>
+
+<span class="p">[</span><span class="k">HAVING</span><span class="w"> </span><span class="o">&lt;</span><span class="n">condición</span><span class="o">&gt;</span><span class="w"> </span><span class="p">[</span><span class="err">{</span><span class="k">AND</span><span class="o">|</span><span class="k">OR</span><span class="err">}</span><span class="w"> </span><span class="o">&lt;</span><span class="n">condición</span><span class="o">&gt;</span><span class="p">...]]</span><span class="w"></span>
+
+<span class="p">[</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="err">{</span><span class="o">&lt;</span><span class="n">nombre_campo</span><span class="o">&gt;|&lt;</span><span class="n">indice_campo</span><span class="o">&gt;</span><span class="err">}</span><span class="w"> </span><span class="p">[</span><span class="err">{</span><span class="k">ASC</span><span class="o">|</span><span class="k">DESC</span><span class="err">}</span><span class="p">][,</span><span class="w"></span>
+<span class="w">    </span><span class="err">{</span><span class="o">&lt;</span><span class="n">nombre_campo</span><span class="o">&gt;|&lt;</span><span class="n">indice_campo</span><span class="o">&gt;</span><span class="err">}</span><span class="w"> </span><span class="p">[</span><span class="err">{</span><span class="k">ASC</span><span class="o">|</span><span class="k">DESC</span><span class="err">}</span><span class="p">]]];</span><span class="w"></span>
+</pre></div><p><br />
+</p>
+<table>
+
+  <tbody><tr>
+  <td><b>SELECT</b>
+  </td>
+  <td>Palabra clave que indica que la sentencia de SQL que queremos ejecutar es una consulta. Selecciona tanto los campos que se enumeran como todos los registros que cumplan con la condición de la parte WHERE. Cuando los atributos se toman de distintas tablas en la parte FROM, también realiza la reunión (join). Por eso se dice que es un lenguaje ortogonal.
+  <p>Cuando se pone la palabra clave <b>ALL</b>
+  Indica que queremos seleccionar todos los valores, es decir que genere un <a href="/wiki/Multiconjunto" title="Multiconjunto">multiconjunto</a> o bolsa en lugar de un conjunto. Es el valor por defecto y no suele especificarse casi nunca.
+  Cuando se pone la palabra clave <b>DISTINCT</b>
+  Indica que queremos seleccionar solo los valores distintos. El resultado es un conjunto en lugar de un <a href="/wiki/Multiconjunto" title="Multiconjunto">multiconjunto</a> o bolsa.
+  </p>
+  </td></tr>
+  <tr>
+  <td><b>FROM</b>
+  </td>
+  <td>Indica la tabla (o tablas) desde la que queremos recuperar los datos. En el caso de que exista más de una tabla se denomina a la consulta "consulta combinada" o reunión "join". En las consultas combinadas es necesario aplicar una condición de combinación a través de una cláusula <b>WHERE</b>.
+  </td></tr>
+  <tr>
+  <td><b>WHERE</b>
+  </td>
+  <td>Especifica una condición que debe cumplirse para que los datos sean devueltos por la consulta. Admite los operadores lógicos <b>AND</b> y <b>OR</b> además de los relacionales y otros.
+  </td></tr>
+  <tr>
+  <td><b>GROUP BY</b>
+  </td>
+  <td>Especifica la agrupación que se da a los datos. Se usa siempre en combinación con funciones agregadas.
+  </td></tr>
+  <tr>
+  <td><b>HAVING</b>
+  </td>
+  <td>Especifica una condición que debe cumplirse para que los datos sean devueltos por la consulta. Su funcionamiento es similar al de <b>WHERE</b> pero aplicado al conjunto de resultados devueltos por la consulta. Debe aplicarse siempre junto a <b>GROUP BY</b> y la condición debe estar referida a los campos contenidos en ella.
+  </td></tr>
+  <tr>
+  <td><b>ORDER BY</b>
+  </td>
+  <td>Presenta el resultado ordenado por las columnas indicadas. El orden puede expresarse con <b>ASC</b> (orden ascendente) y <b>DESC </b>(orden descendente). El valor predeterminado es <b>ASC.</b>
+  </td></tr></tbody></table>
+  <hr>
+<h2>Ejemplos</h2>
+      <p>A continuación se presentan algunas consultas básicas de SQL:</p><br>
+      <pre>
+        SELECT * FROM clientes;
+        
+        INSERT INTO pedidos (id_cliente, id_producto, cantidad)
+        VALUES (1, 2, 5);
+        
+        UPDATE productos SET precio = 9.99 WHERE id = 1;
+        
+        DELETE FROM clientes WHERE id = 5;
+      </pre>
+      <hr>
+      <p>Para formular una consulta a la tabla coches y recuperar los campos matrícula, marca, modelo, color, número_kilómetros, num_plazas debemos ejecutar la siguiente consulta. Los datos serán devueltos ordenados por marca y por modelo en orden ascendente, de menor a mayor. La palabra clave <b>FROM</b> indica que los datos serán recuperados de la tabla Coches.
+      </p>
+      <div class="mw-highlight mw-highlight-lang-sql mw-content-ltr" dir="ltr"><pre><span></span><span class="k">SELECT</span><span class="w"></span>
+      <span class="w">    </span><span class="n">matricula</span><span class="p">,</span><span class="w"></span>
+      <span class="w">    </span><span class="n">marca</span><span class="p">,</span><span class="w"></span>
+      <span class="w">    </span><span class="n">modelo</span><span class="p">,</span><span class="w"></span>
+      <span class="w">    </span><span class="n">color</span><span class="p">,</span><span class="w"></span>
+      <span class="w">    </span><span class="n">numero_kilometros</span><span class="p">,</span><span class="w"></span>
+      <span class="w">    </span><span class="n">num_plazas</span><span class="w"></span>
+      <span class="k">FROM</span><span class="w"></span>
+      <span class="w">    </span><span class="n">coches</span><span class="w"></span>
+      <span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"></span>
+      <span class="w">    </span><span class="n">marca</span><span class="p">,</span><span class="w"></span>
+      <span class="w">    </span><span class="n">modelo</span><span class="p">;</span><span class="w"></span>
+      </pre></div>
+      <p>Ejemplo de consulta simplificada a través de un comodín de campos (*):
+      </p><p>El uso del asterisco indica que queremos que la consulta devuelva todos los campos que existen en la tabla y los datos serán devueltos ordenados por marca y por modelo.
+      </p>
+      <div class="mw-highlight mw-highlight-lang-sql mw-content-ltr" dir="ltr"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"></span>
+      <span class="k">FROM</span><span class="w"></span>
+      <span class="w">    </span><span class="n">coches</span><span class="w"></span>
+      <span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"></span>
+      <span class="w">    </span><span class="n">marca</span><span class="p">,</span><span class="w"></span>
+      <span class="w">    </span><span class="n">modelo</span><span class="p">;</span><span class="w"></span>
+      </pre></div>
+    </section>
+    
+    <section id="resources">
+      <h2>Recursos</h2>
+      <ul>
+        <li><a href="https://www.w3schools.com/sql/">Tutorial de SQL de W3</a></li>
+        <li><a href="https://www.sqlcourse.com/">SQLCourse.com</a></li>
