@@ -1,10 +1,7 @@
---Primero, vamos a modificar la tabla de PRODUCTOS para incluir una columna adicional llamada STOCK que representa la cantidad disponible en el inventario:
-
+--Primero, vamos a modificar la tabla de PRODUCTOS:
+--Hay esceso de código porque he ido probando, es más la muestra del proceso.
 ALTER TABLE PRODUCTOS ADD STOCK NUMBER(10);
 
---A continuación, vamos a crear una excepción personalizada llamada Sin_stock_Exception que se lanzará cuando no haya suficiente stock para un producto:
-
---A continuación, crearemos una función llamada VerificarStock que verificará si hay suficiente stock para un producto determinado antes de realizar un pedido. La función aceptará el código de producto y la cantidad solicitada como parámetros y devolverá verdadero (TRUE) si hay suficiente stock, o lanzará la excepción Sin_stock_Exception si no hay suficiente stock:
 
 CREATE OR REPLACE FUNCTION VerificarStock(p_nombre_producto VARCHAR2, p_cantidad NUMBER)
    RETURN BOOLEAN
@@ -47,7 +44,7 @@ END;
 / 
 
 
---A continuación, vamos a crear un procedimiento llamado AddProductoPedido que utilizará la función VerificarStock para verificar el stock antes de realizar un pedido. El procedimiento aceptará el código de producto y la cantidad solicitada como parámetros, y mostrará un mensaje de aviso si no hay suficiente stock:
+
 CREATE OR REPLACE FUNCTION AddProductoPedido(p_num_pedido VARCHAR2, p_nombre_producto VARCHAR2, p_cantidad NUMBER)
 RETURN NUMBER
 IS
@@ -205,7 +202,7 @@ EXCEPTION
       DBMS_OUTPUT.PUT_LINE('No hay suficiente stock para realizar el pedido.'|| v_stock_actual);
 END;
 /
---Con estos componentes en su lugar, puedes llamar al procedimiento AddProductoPedido para realizar un pedido y verificar automáticamente si hay suficiente stock disponible. Por ejemplo:
+
 BEGIN
    AddProductoPedido(123, 10); -- Llamar al procedimiento con el código de producto y la cantidad deseada.
 END;
@@ -235,7 +232,7 @@ END;
 
 
 
--- Trigger para controlar modificaciones en la tabla LINEA_PEDIDO 777
+-- Trigger para controlar modificaciones en la tabla LINEA_PEDIDO 999
 CREATE OR REPLACE TRIGGER VerificarStockPedido
 BEFORE INSERT OR UPDATE ON LINEA_PEDIDO
 FOR EACH ROW
@@ -243,10 +240,9 @@ DECLARE
    v_stock_actual NUMBER;
 BEGIN
    IF INSERTING OR UPDATING THEN
-      -- Verificar si hay suficiente stock para el producto antes de realizar un pedido
       SELECT STOCK INTO v_stock_actual
       FROM PRODUCTOS
-      WHERE NOMBRE_P = :NEW.CODIGO;
+      WHERE NOMBRE_P = :OLD.CODIGO;
 
       IF v_stock_actual < :NEW.CANTIDAD THEN
          RAISE_APPLICATION_ERROR(-20001, 'No hay suficiente stock para realizar el pedido.');
@@ -254,11 +250,7 @@ BEGIN
    END IF;
 END;
 /
---En el primer trigger, llamado ActualizarStock, se actualiza el valor del stock después de una inserción o actualización en la tabla PRODUCTOS, o se restaura el stock antes de una eliminación en la tabla PRODUCTOS.
 
---En el segundo trigger, llamado VerificarStockPedido, se verifica si hay suficiente stock para el producto antes de realizar un pedido en la tabla LINEA_PEDIDO. Si no hay suficiente stock, se lanza un error de aplicación con un mensaje de aviso.
-
---Estos triggers se activarán automáticamente cada vez que se realicen modificaciones en las tablas PRODUCTOS y LINEA_PEDIDO, lo que garantizará la integridad del control de stock en tiempo real.
 
 
 
@@ -317,17 +309,7 @@ SELECT TITULO, PRECIO, INCREMENTAR(PRECIO, 20) "PRECIO + 20%" FROM LIBROS;
 
 SELECT TITULO, PRECIO, INCREMENTAR(PRECIO, 100) "PRECIO + 100%" FROM LIBROS;
 
---borrar productos porque ya no se venden
-CREATE OR REPLACE PROCEDURE BORRAR_ASIGNATURAS
-IS
-BEGIN
-    DELETE FROM ASIGNATURAS
-        WHERE COD > 5;
-    DBMS_OUTPUT.PUT_LINE('Eliminadas ' || SQL%ROWCOUNT || ' filas.');
 
-END;
-/
-EXECUTE BORRAR_ASIGNATURAS;
 
 -- trigger control de conexiones 777
 CREATE TABLE CONTROL_CONEXIONES(
@@ -354,8 +336,6 @@ CREATE OR REPLACE PACKAGE GestionPedidos AS
   FUNCTION AddProductoPedido(p_nombre_producto VARCHAR2, p_cantidad NUMBER, descuento NUMBER)
     RETURN NUMBER;
 
-  FUNCTION VerificarStock(p_nombre_producto VARCHAR2, p_cantidad NUMBER)
-    RETURN BOOLEAN;
 END GestionPedidos;
 /
 
@@ -578,5 +558,262 @@ EXCEPTION
     DBMS_OUTPUT.PUT_LINE('Error al actualizar stock: 8 bits a 1 es 255 max');
    WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Error al actualizar el stock: ' || SQLERRM);
+END;
+/
+
+
+CREATE OR REPLACE FUNCTION producto_estrella
+  RETURN VARCHAR2
+IS
+  v_codprod VARCHAR2(9);
+  v_nombprod VARCHAR2(15);
+BEGIN
+  SELECT COD_PRODUCTO INTO v_codprod
+  FROM (
+    SELECT COD_PRODUCTO, SUM(CANTIDAD) AS vendido
+    FROM LINEA_PEDIDO
+    GROUP BY COD_PRODUCTO
+    ORDER BY vendido DESC
+  ) WHERE ROWNUM = 1;
+  
+  SELECT NOMBRE_P INTO v_nombprod
+  FROM PRODUCTOS
+  WHERE CODIGO = v_codprod;
+  
+  RETURN v_nombprod;
+END;
+/
+select producto_estrella() from dual;
+
+
+CREATE OR REPLACE FUNCTION Mostrar_Producto_Impopular
+  RETURN VARCHAR2
+IS
+ v_codprod VARCHAR2(9);
+  v_nombprod VARCHAR2(15);
+BEGIN
+SELECT COD_PRODUCTO INTO v_codprod
+  FROM (
+    SELECT COD_PRODUCTO, SUM(CANTIDAD) AS vendido
+    FROM LINEA_PEDIDO
+    GROUP BY COD_PRODUCTO
+    ORDER BY vendido ASC
+  ) WHERE ROWNUM = 1;
+  
+  SELECT NOMBRE_P INTO v_nombprod
+  FROM PRODUCTOS
+  WHERE CODIGO = v_codprod;
+  
+  RETURN v_codprod;
+  DBMS_OUTPUT.PUT_LINE('Si quieres puedes eliminar el producto ' || v_nombprod || ' con el código ' || v_codprod || ' con el comando: execute Eliminar_Producto_Impopular();.');
+END;
+/
+  
+select Mostrar_Producto_Impopular() from dual;
+
+--borrar productos porque ya no se venden
+CREATE OR REPLACE PROCEDURE Eliminar_Producto IS
+  v_codprod VARCHAR2(9);
+  v_nombprod VARCHAR2(15);
+BEGIN --llama a mostrar producto impopular
+  DELETE FROM PRODUCTOS
+  WHERE CODIGO = mostrar_producto_impopular();
+  
+  DBMS_OUTPUT.PUT_LINE('Eliminadas ' || SQL%ROWCOUNT || ' filas.');
+END;
+/
+execute Eliminar_Producto();
+
+CREATE OR REPLACE FUNCTION clientes_habituales()
+   RETURN VARCHAR2
+IS
+  CURSOR c1 IS
+    SELECT nombre, dni
+    FROM cliente
+    WHERE dni IN (
+      SELECT dni
+      FROM cabecera_pedido
+      GROUP BY dni
+      HAVING COUNT(*) > 2
+    );
+
+  v_nombre cliente.nombre%TYPE;
+  v_dni cliente.dni%TYPE;
+BEGIN
+  OPEN c1;
+
+  LOOP
+    FETCH c1 INTO v_nombre, v_dni;
+    EXIT WHEN c1%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE('El cliente ' || v_nombre || ' con dni ' || v_dni || ' es habitual');
+  END LOOP;
+
+  CLOSE c1;
+  DBMS_OUTPUT.PUT_LINE('Mensaje comprobación, función ejecutada correctamente.');
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('No se ha encontrado ningún cliente habitual');
+END;
+/
+EXECUTE clientes_habituales;
+
+
+CREATE OR REPLACE FUNCTION clientes_habituales
+RETURN VARCHAR2
+IS
+  v_result VARCHAR2(300);
+  v_message VARCHAR2(300);
+  no_clientes EXCEPTION;
+BEGIN
+  SELECT LISTAGG('El cliente ' || nombre || ' con dni ' || dni || ' es habitual', ', ') WITHIN GROUP (ORDER BY dni)
+    INTO v_result
+    FROM cliente
+    WHERE dni IN (
+      SELECT dni
+      FROM cabecera_pedido
+      GROUP BY dni
+      HAVING COUNT(*) > 2
+    );
+
+  IF v_result IS NULL THEN
+    v_message := 'Sin resultados.';
+    raise no_clientes;
+  ELSE
+    v_message := 'Clientes habituales: ' || v_result;
+  END IF;
+
+  RETURN v_message;
+EXCEPTION
+  WHEN no_clientes THEN
+    dbms_output.put_line('No se ha encontrado ningún cliente habitual.');
+END;
+/
+select clientes_habituales() from dual;
+
+INSERT INTO CABECERA_PEDIDO VALUES('P007','01/03/2023','51125737J');
+
+
+CREATE OR REPLACE PACKAGE DescuentoPedidoPackage AS
+   FUNCTION CalcularDescuento(p_num_pedido VARCHAR2)
+      RETURN NUMBER;
+
+   FUNCTION CalcularDescuento(p_num_pedido VARCHAR2, p_porcentaje_descuento NUMBER)
+      RETURN NUMBER;
+END DescuentoPedidoPackage;
+/
+
+CREATE OR REPLACE PACKAGE BODY DescuentoPedidoPackage AS
+   FUNCTION CalcularDescuento(p_num_pedido VARCHAR2)
+      RETURN NUMBER IS
+      v_coste_total NUMBER;
+   BEGIN
+      -- Cálculo del coste total del pedido
+
+      -- Aquí va el código para calcular el coste total del pedido con el número de pedido p_num_pedido
+      
+      RETURN v_coste_total;
+   END CalcularDescuento;
+
+   FUNCTION CalcularDescuento(p_num_pedido VARCHAR2, p_porcentaje_descuento NUMBER)
+      RETURN NUMBER IS
+      v_coste_total NUMBER;
+   BEGIN
+      -- Cálculo del coste total del pedido con descuento
+
+      -- Aquí va el código para calcular el coste total del pedido con el número de pedido p_num_pedido
+      -- aplicando el descuento p_porcentaje_descuento
+      
+      RETURN v_coste_total;
+   END CalcularDescuento;
+END DescuentoPedidoPackage;
+/
+
+
+CREATE OR REPLACE PACKAGE DescuentoPedidoPackage AS
+   FUNCTION CalcularDescuento(p_num_pedido VARCHAR2)
+      RETURN NUMBER;
+
+   FUNCTION CalcularDescuento(p_num_pedido VARCHAR2, p_porcentaje_descuento NUMBER)
+      RETURN NUMBER;
+END DescuentoPedidoPackage;
+/
+
+CREATE OR REPLACE PACKAGE BODY DescuentoPedidoPackage AS
+   FUNCTION CalcularDescuento(p_num_pedido VARCHAR2)
+      RETURN NUMBER IS
+      v_coste_total NUMBER;
+   BEGIN
+      SELECT SUM(CANTIDAD * PRECIO) INTO v_coste_total
+      FROM LINEA_PEDIDO lp
+      JOIN PRODUCTOS p ON lp.COD_PRODUCTO = p.CODIGO
+      WHERE lp.NUM_PEDIDO = p_num_pedido;
+
+      RETURN v_coste_total;
+   END CalcularDescuento;
+
+   FUNCTION CalcularDescuento(p_num_pedido VARCHAR2, p_porcentaje_descuento NUMBER)
+      RETURN NUMBER IS
+      v_coste_total NUMBER;
+   BEGIN
+      SELECT SUM(CANTIDAD * PRECIO * (1 - p_porcentaje_descuento/100)) INTO v_coste_total
+      FROM LINEA_PEDIDO lp
+      JOIN PRODUCTOS p ON lp.COD_PRODUCTO = p.CODIGO
+      WHERE lp.NUM_PEDIDO = p_num_pedido;
+
+      RETURN v_coste_total;
+   END CalcularDescuento;
+END DescuentoPedidoPackage;
+/
+
+
+-- Llamada a la función CalcularDescuento sin descuento aplicado
+DECLARE
+   v_coste_total_sin_descuento NUMBER;
+   v_num_pedido VARCHAR2(4) := 'P001';
+BEGIN
+   v_coste_total_sin_descuento := DescuentoPedidoPackage.CalcularDescuento(v_num_pedido);
+   DBMS_OUTPUT.PUT_LINE('Coste total sin descuento: ' || v_coste_total_sin_descuento);
+END;
+/
+
+-- Llamada a la función CalcularDescuento con descuento del 10% aplicado
+DECLARE
+   v_coste_total_con_descuento NUMBER;
+   v_num_pedido VARCHAR2(4) := 'P001';
+   v_porcentaje_descuento NUMBER := 10;
+BEGIN
+   v_coste_total_con_descuento := DescuentoPedidoPackage.CalcularDescuento(v_num_pedido, v_porcentaje_descuento);
+   DBMS_OUTPUT.PUT_LINE('Coste total con descuento (' || v_porcentaje_descuento || '%): ' || v_coste_total_con_descuento);
+END;
+/
+
+CREATE OR REPLACE PROCEDURE CalcularDescuentoProcedimiento 
+IS
+   v_coste_total_con_descuento NUMBER;
+   v_num_pedido VARCHAR2(4) := 'P001';
+   v_porcentaje_descuento NUMBER := 10;
+BEGIN
+   v_coste_total_con_descuento := DescuentoPedidoPackage.CalcularDescuento(v_num_pedido, v_porcentaje_descuento);
+   DBMS_OUTPUT.PUT_LINE('Coste total con descuento (' || v_porcentaje_descuento || '%): ' || v_coste_total_con_descuento);
+END;
+/
+
+CREATE OR REPLACE PROCEDURE CalcularDescuentoProcedimiento AS
+   v_coste_total_con_descuento NUMBER;
+   v_num_pedido VARCHAR2(4) := 'P001';
+   v_porcentaje_descuento NUMBER := 10;
+   v_multiplicador_descuento NUMBER := 1;
+   v_clientes_habituales VARCHAR2(200);
+BEGIN
+   v_clientes_habituales := clientes_habituales();
+
+   IF INSTR(v_clientes_habituales, 'No se ha encontrado ningún cliente habitual') = 0 THEN
+      IF INSTR(v_clientes_habituales, v_num_pedido) > 0 THEN
+         v_multiplicador_descuento := 2;
+      END IF;
+   END IF;
+
+   v_coste_total_con_descuento := DescuentoPedidoPackage.CalcularDescuento(v_num_pedido, v_porcentaje_descuento * v_multiplicador_descuento);
+   DBMS_OUTPUT.PUT_LINE('Coste total con descuento (' || v_porcentaje_descuento || '%): ' || v_coste_total_con_descuento);
 END;
 /
