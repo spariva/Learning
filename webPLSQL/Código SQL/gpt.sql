@@ -111,31 +111,28 @@ END;
 
 
 
--- Trigger para controlar modificaciones en la tabla PRODUCTOS
+-- Trigger para controlar modificaciones en la tabla PRODUCTOS 777
 DROP TABLE AUDITAR_PRODUCTOS CASCADE CONSTRAINTS;
 CREATE TABLE AUDITAR_PRODUCTOS(
     COL1 VARCHAR(200)
 );
 
-CREATE OR REPLACE TRIGGER ActualizarStock
-   AFTER INSERT OR UPDATE OR DELETE ON PRODUCTOS
+CREATE OR REPLACE TRIGGER AUDITAR_PROD
+   BEFORE INSERT OR UPDATE OR DELETE ON PRODUCTOS
    FOR EACH ROW
 BEGIN
    IF INSERTING OR UPDATING THEN
-      -- Actualizar el stock después de una inserción o actualización en la tabla PRODUCTOS
-      UPDATE PRODUCTOS
-      SET STOCK = :NEW.STOCK
-      WHERE NOMBRE_P = :NEW.NOMBRE_P;
+      INSERT INTO AUDITAR_PRODUCTOS VALUES('Stock actualizado ' || :NEW.NOMBRE_P || ': previo: ' || :OLD.STOCK || ' nuevo: ' || :NEW.STOCK);
    ELSIF DELETING THEN
-      -- Restaurar el stock antes de una eliminación en la tabla PRODUCTOS
-      UPDATE PRODUCTOS
-      SET STOCK = :OLD.STOCK
-      WHERE NOMBRE_P = :OLD.NOMBRE_P;
+      INSERT INTO AUDITAR_PRODUCTOS VALUES('Producto eliminado ' || :OLD.NOMBRE_P || ': ' || :OLD.STOCK);
    END IF;
 END;
 /
 
--- Trigger para controlar modificaciones en la tabla LINEA_PEDIDO
+
+
+
+-- Trigger para controlar modificaciones en la tabla LINEA_PEDIDO 777
 CREATE OR REPLACE TRIGGER VerificarStockPedido
 BEFORE INSERT OR UPDATE ON LINEA_PEDIDO
 FOR EACH ROW
@@ -160,24 +157,7 @@ END;
 
 --Estos triggers se activarán automáticamente cada vez que se realicen modificaciones en las tablas PRODUCTOS y LINEA_PEDIDO, lo que garantizará la integridad del control de stock en tiempo real.
 
-CREATE OR REPLACE TRIGGER VerificarStockPedido
-BEFORE INSERT OR UPDATE ON LINEA_PEDIDO
-FOR EACH ROW
-DECLARE
-  v_stock_actual NUMBER;
-  v_nombre_producto PRODUCTOS.NOMBRE_P%TYPE;
-BEGIN
-  SELECT STOCK, NOMBRE_P INTO v_stock_actual, v_nombre_producto FROM PRODUCTOS WHERE NOMBRE_P = :NEW.CODIGO;
 
-  IF v_stock_actual - :NEW.CANTIDAD < 5 THEN
-    DBMS_OUTPUT.PUT_LINE('Queda poco stock de ' || v_nombre_producto || '. Pronto solo quedará ' || (v_stock_actual - :NEW.CANTIDAD) || ' unidades.');
-  END IF;
-
-  IF v_stock_actual < :NEW.CANTIDAD < 0 THEN
-    RAISE_APPLICATION_ERROR(-20001, 'No hay suficiente stock para realizar el pedido.');
-  END IF;
-END;
-/
 
 
 --Creo que voy a hacer una función que sea igual pero sobrecargando la función, para meterla en el mismo paquete. Y que además la otra función sea un parámetro extra, cupón descuento. Y te haga básicamente esto:
@@ -360,45 +340,99 @@ END GestionPedidos;
 /
 
 
---pruebas
+--pruebITAS
+DECLARE
+  CURSOR c1 IS
+    SELECT CODIGO FROM PRODUCTOS;
+  v_codigo_producto PRODUCTOS.CODIGO%TYPE;
+BEGIN
+   OPEN c1;
+   LOOP
+      FETCH c1 INTO v_codigo_producto;
+      EXIT WHEN c1%NOTFOUND;
+      UPDATE PRODUCTOS SET STOCK = 15 WHERE CODIGO = v_codigo_producto;
+    COMMIT;
+   END LOOP;
+   CLOSE c1;
+  DBMS_OUTPUT.PUT_LINE('Valores insertados en la columna STOCK.');
+END;
+/
 
-CREATE OR REPLACE PROCEDURE ActualizarStockProductos IS
+DECLARE
+  CURSOR c1 IS
+    SELECT CODIGO FROM PRODUCTOS;
+  v_codigo_producto PRODUCTOS.CODIGO%TYPE;
+BEGIN
+   OPEN c1;
+   LOOP
+      FETCH c1 INTO v_codigo_producto;
+      EXIT WHEN c1%NOTFOUND;
+      DBMS_OUTPUT.PUT_LINE(v_codigo_producto);
+    COMMIT;
+   END LOOP;
+   CLOSE c1;
+  DBMS_OUTPUT.PUT_LINE('Valores insertados en la columna STOCK.');
+END;
+/
+
+
+
+CREATE OR REPLACE PROCEDURE ActualizarStock IS
   CURSOR c_productos IS
     SELECT CODIGO FROM PRODUCTOS;
   v_codigo_producto_binario PRODUCTOS.CODIGO%TYPE;
   v_codigo_producto_decimal NUMBER;
   v_stock_actual PRODUCTOS.STOCK%TYPE;
+  codigo_incorrecto EXCEPTION;
 BEGIN
   OPEN c_productos;
-  
-  LOOP
-    FETCH c_productos INTO v_codigo_producto_binario;
-    EXIT WHEN c_productos%NOTFOUND;
-    
-    v_codigo_producto_decimal := TO_NUMBER(v_codigo_producto_binario, 'B');
-    
+  FETCH c_productos INTO v_codigo_producto_binario;
+
+  WHILE c_productos%FOUND LOOP
+    v_codigo_producto_decimal := BinarioADecimal(v_codigo_producto_binario);
     SELECT STOCK INTO v_stock_actual
     FROM PRODUCTOS
     WHERE CODIGO = v_codigo_producto_decimal;
     
-    IF v_codigo_producto_decimal > 8 THEN
-      UPDATE PRODUCTOS
-      SET STOCK = v_stock_actual + 20
-      WHERE CODIGO = v_codigo_producto_decimal;
-    ELSE
-      UPDATE PRODUCTOS
-      SET STOCK = v_stock_actual + 10
-      WHERE CODIGO = v_codigo_producto_decimal;
-    END IF;
-    
+      IF v_codigo_producto_decimal > 255 THEN
+         RAISE codigo_incorrecto; --8 bits encendidos son 255
+      ELSIF v_codigo_producto_decimal > 8 THEN
+         UPDATE PRODUCTOS
+         SET STOCK = v_stock_actual + 20
+         WHERE CODIGO = v_codigo_producto_decimal;
+      ELSE
+         UPDATE PRODUCTOS
+         SET STOCK = v_stock_actual + 10
+         WHERE CODIGO = v_codigo_producto_decimal;
+      END IF;
     COMMIT;
+    FETCH c_productos INTO v_codigo_producto_binario;
   END LOOP;
-  
   CLOSE c_productos;
   
   DBMS_OUTPUT.PUT_LINE('Stock actualizado exitosamente.');
 EXCEPTION
-  WHEN OTHERS THEN
+   WHEN codigo_incorrecto THEN
+    DBMS_OUTPUT.PUT_LINE('Error al actualizar stock: 8 bits a 1 es 255 max');
+   WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Error al actualizar el stock: ' || SQLERRM);
 END;
 /
+Execute ActualizarStock();
+
+CREATE OR REPLACE FUNCTION BinarioADecimal(binario IN VARCHAR2) RETURN NUMBER IS
+  decimal NUMBER := 0;
+BEGIN
+  FOR i IN REVERSE 1..LENGTH(binario) LOOP
+    DECLARE
+      digito NUMBER := TO_NUMBER(SUBSTR(binario, i, 1)); 
+      posicion NUMBER := LENGTH(binario) - i; 
+    BEGIN
+      decimal := decimal + (digito * POWER(2, posicion)); 
+    END;
+  END LOOP;
+  
+  RETURN decimal;
+END;
+/
+

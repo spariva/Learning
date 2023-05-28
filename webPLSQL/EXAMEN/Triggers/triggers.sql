@@ -83,3 +83,22 @@ BEGIN
     
 END;
 /
+
+CREATE OR REPLACE TRIGGER VerificarStockPrevioPedido
+BEFORE INSERT OR UPDATE ON LINEA_PEDIDO
+FOR EACH ROW
+DECLARE
+  v_stock_actual NUMBER;
+  v_nombre_producto PRODUCTOS.NOMBRE_P%TYPE;
+BEGIN
+  SELECT STOCK, NOMBRE_P INTO v_stock_actual, v_nombre_producto FROM PRODUCTOS WHERE NOMBRE_P = :NEW.CODIGO;
+
+  IF v_stock_actual - :NEW.CANTIDAD < 5 THEN
+    DBMS_OUTPUT.PUT_LINE('Queda poco stock de ' || v_nombre_producto || '. Pronto solo quedará ' || (v_stock_actual - :NEW.CANTIDAD) || ' unidades.');
+  END IF;
+
+  IF v_stock_actual < :NEW.CANTIDAD < 0 THEN
+    RAISE_APPLICATION_ERROR(-20001, 'No hay suficiente stock para realizar el pedido.');
+  END IF;
+END;
+/
