@@ -29,10 +29,11 @@ public class MainAgro {
         } catch (InvalidParameterExceptione iPE) {
             iPE.getMessage();
         }
-        //manzana.compareTo(cruason);
+
+        int option = 0; //I initialiaze it outside in order to simplify the do while loop.
         do{
             printMenu();
-            int option = sc.nextInt();
+            option = sc.nextInt();
             sc.nextLine();//clean buffer.
 
         switch (option) {
@@ -40,32 +41,23 @@ public class MainAgro {
                 company.writeCSV();
             case 2:
                 company.readCSV(); 
+            case 3:// TODO: I should implement a method to encapsulate this.
+                Collections.sort(company.products, Product.BY_EXPIRACY_DATE);
+            case 4: 
+                System.out.println(company);// TODO: I will override toString() in AgroGestion and their child classes.
             default: 
-                System.out.println("Bye bye");
+                System.out.println("Something weird happened.");
         }
-        }while(sc.nextInt() != 1 || sc.nextInt() != 2);
+        }while(sc.nextInt() != 5);
         
         System.out.println(company);
     }
+    
     private static void printMenu(){
         System.out.println("Press 1 to write a file.");
         System.out.println("Press 2 to read the file.");
-        System.out.println("Press any other number to exit.");
+        System.out.println("Press 3 to sort the products by expiracy date.");
+        System.out.println("Press 4 to print details.");
+        System.out.println("Press 5 to exit.");
     }
-        /*private static void getMenu(){
-        sc.nextLine();
-        int option = sc.nextInt();
-        sc.nextLine();//clean buffer.
-        System.out.println("Press 1 to write a file.");
-        System.out.println("Press 2 to read the file.");
-        System.out.println("Press any other number to exit.");
-        switch (option) {
-            case 1:
-                company.writeCSV();
-            case 2:
-                company.readCSV(); 
-            default: 
-                System.out.println("Bye bye");
-        }
-    }*/
 }
