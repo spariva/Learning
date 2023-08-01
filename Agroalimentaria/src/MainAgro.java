@@ -1,6 +1,5 @@
 import ejemplo7agroeco.*;
 
-import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -41,8 +40,26 @@ public class MainAgro {
                 company.writeCSV();
             case 2:
                 company.readCSV(); 
-            case 3:// TODO: I should implement a method to encapsulate this.
-                Collections.sort(company.products, Product.BY_EXPIRACY_DATE);
+            case 3:
+                System.out.println("Press 1 to sort by expiracy date.");
+                System.out.println("Press 2 to sort by country.");
+                System.out.println("Press 3 to sort by name.");
+                int option2 = sc.nextInt();
+                sc.nextLine();//clean buffer.
+                switch (option2) {
+                    case 1:
+                        company.sortByExpiracyDate();
+                        break;
+                    case 2:
+                        company.sortByCountry();
+                        break;  
+                    case 3:
+                        company.sortByName();
+                        break;
+                    default:
+                        System.out.println("Something weird happened.");
+                        break;
+                }
             case 4: 
                 System.out.println(company);// TODO: I will override toString() in AgroGestion and their child classes.
             default: 
@@ -56,7 +73,7 @@ public class MainAgro {
     private static void printMenu(){
         System.out.println("Press 1 to write a file.");
         System.out.println("Press 2 to read the file.");
-        System.out.println("Press 3 to sort the products by expiracy date.");
+        System.out.println("Press 3 to sort the products");
         System.out.println("Press 4 to print details.");
         System.out.println("Press 5 to exit.");
     }

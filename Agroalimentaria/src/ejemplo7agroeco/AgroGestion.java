@@ -152,27 +152,29 @@ public class AgroGestion {
         }
     }
 
-    public String reorganizeProductsByName(){
+    public String sortByName(){
         String string = "";
-        Collections.sort(products, Product.BY_NAME);
-        for (Product product : products) {
+        List<Producto> productsByName = new ArrayList<>(products);
+        Collections.sort(productsByName, Product.BY_NAME);
+
+        for (Product product : productsByName) {
             string += product.getName(); 
-            //Using a getter just to get used to. But not needed here.
         }
-        
         return string;
     }
 
-    public String reorganizeByExpiracyDate(){
+    public String sortByExpiracyDate(){
         String string = "";
-        Collections.sort(products, Product.BY_EXPIRACY_DATE);
-        for (Product product : products) {
+        List<Producto> productsByExpiracyDate = new ArrayList<>(products);
+        Collections.sort(productsByExpiracyDate, Product.BY_EXPIRACY_DATE);
+
+        for (Product product : productsByExpiracyDate) {
             string += product.getName();
         }
         return string;
     }
 
-    public String organizeByCountry(){
+    public String sortByCountry(){
         String cadena = null;
         List<Product> products2 = new ArrayList<>(products);
         Collections.sort(products2, Product.LALALA);
