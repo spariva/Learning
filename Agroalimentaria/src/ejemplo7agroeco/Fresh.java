@@ -2,7 +2,7 @@ package ejemplo7agroeco;
 
 public class Fresh extends Product{
 
-    public Fresh(String expiracyDate, int lotNumber, String packagingDate, String country, String name){
+    public Fresh(String expiracyDate, String lotNumber, String packagingDate, String country, String name) throws InvalidParameterExceptione{
         super(expiracyDate, lotNumber, packagingDate, country, name);
         
     }

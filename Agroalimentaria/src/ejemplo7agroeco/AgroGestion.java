@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AgroGestion {
@@ -75,35 +76,59 @@ public class AgroGestion {
      * I close the writer and handle the possible IOException as well. 
      */
     public void writeCSV(){
+        BufferedWriter writerProductsList = null;
+        BufferedWriter writerFreshList = null;
+        BufferedWriter writerColdList = null;
+        BufferedWriter writerFrozenList = null;
         try {
-            BufferedWriter writerProductsList = new BufferedWriter(new FileWriter("Products.txt"));
-            BufferedWriter writerFreshList = new BufferedWriter(new FileWriter("Fresh.txt"));
-            BufferedWriter writerColdList = new BufferedWriter(new FileWriter("Cold.txt"));
-            BufferedWriter writerFrozenList = new BufferedWriter(new FileWriter("Frozen.txt"));
+            writerProductsList = new BufferedWriter(new FileWriter("Products.txt"));
+            writerFreshList = new BufferedWriter(new FileWriter("Fresh.txt"));
+            writerColdList = new BufferedWriter(new FileWriter("Cold.txt"));
+            writerFrozenList = new BufferedWriter(new FileWriter("Frozen.txt"));
 
             if(!products.isEmpty()){
                 for (Product p : products) {
                     writerProductsList.write(p.toCsvLine());
                 }
-                writerProductsList.close();
+                try {
+                    writerProductsList.close();
+                  } catch (IOException e) {
+                    System.out.println("The writer didn´t close properly: "
+                        + e.getMessage());
+                  }
             }
             if(!freshProducts.isEmpty()){
                 for (Product p : freshProducts) {//Would it be better Fresh rather than Product?
                     writerFreshList.write(p.toCsvLine());
                 }
-                writerFreshList.close();
+                try {
+                    writerFreshList.close();
+                } catch (IOException e) {
+                    System.out.println("The writer didn´t close properly: "
+                        + e.getMessage());
+                  }
             }
             if(!coldProducts.isEmpty()){
                 for (Product p : coldProducts) {
                     writerColdList.write(p.toCsvLine());
                 }
-                writerColdList.close();
+                try {
+                    writerColdList.close();
+                } catch (IOException e) {
+                    System.out.println("The writer didn´t close properly: "
+                        + e.getMessage());
+                  }
             }
             if(!frozenProducts.isEmpty()){
                 for (Product p : frozenProducts) {
                     writerFrozenList.write(p.toCsvLine());//aquí daría error porque hay tres tipos diferentes etc
                 }
-                writerFrozenList.close();
+                try {
+                    writerFrozenList.close();
+                } catch (IOException e) {
+                    System.out.println("The writer didn´t close properly: "
+                        + e.getMessage());
+                  }
             }
         } catch (IOException ioe) {
             System.out.println("La que has liao pollito...");
@@ -115,7 +140,7 @@ public class AgroGestion {
 
     public void readCSV(){
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("Products.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("Products.csv"));
             String line;
             while((line = reader.readLine()) != null){
                 System.out.println(line);
@@ -127,9 +152,34 @@ public class AgroGestion {
         }
     }
 
+    public String reorganizeProductsByName(){
+        String string = "";
+        Collections.sort(products, Product.BY_NAME);
+        for (Product product : products) {
+            string += product.getName(); 
+            //Using a getter just to get used to. But not needed here.
+        }
+        
+        return string;
+    }
 
-    /*private Reader FileReader(String string) {
-        return null;
-    }*/
+    public String reorganizeByExpiracyDate(){
+        String string = "";
+        Collections.sort(products, Product.BY_EXPIRACY_DATE);
+        for (Product product : products) {
+            string += product.getName();
+        }
+        return string;
+    }
+
+    public String organizeByCountry(){
+        String cadena = null;
+        List<Product> products2 = new ArrayList<>(products);
+        Collections.sort(products2, Product.LALALA);
+        for (Product product : products2) {
+            cadena += product;
+        }
+        return cadena;
+    }
     
 }

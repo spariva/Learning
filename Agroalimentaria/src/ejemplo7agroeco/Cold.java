@@ -6,8 +6,8 @@ public class Cold extends Product{
     float temperature;
 
     
-    public Cold(String expiracyDate, int lotNumber, String packagingDate, String country, String name,
-            String supervisionCode, float temperature) {
+    public Cold(String expiracyDate, String lotNumber, String packagingDate, String country, String name,
+            String supervisionCode, float temperature) throws InvalidParameterExceptione {
         super(expiracyDate, lotNumber, packagingDate, country, name);
         this.supervisionCode = supervisionCode;
         this.temperature = temperature;
@@ -29,7 +29,7 @@ public class Cold extends Product{
 
     @Override
     public String toCsvLine() {
-        return name + "," + EXPIRACY_DATE + "," + LOT_NUMBER + "," + packagingDate + "," + country + "," + supervisionCode + "," + temperature;
+        return name + "," + expiracyDate + "," + lotNumber + "," + packagingDate + "," + country + "," + supervisionCode + "," + temperature;
     }
 
     

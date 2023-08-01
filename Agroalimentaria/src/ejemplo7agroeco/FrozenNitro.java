@@ -19,8 +19,8 @@ public class FrozenNitro extends Frozen{
         BIG
     }
 
-    public FrozenNitro(String expiracyDate, int lotNumber, String packagingDate, String country, String name,
-            float temperature, FreezingMethodsEnum metodoCongelacion, int segundosExposicion, MaterialTypesEnum material) {
+    public FrozenNitro(String expiracyDate, String lotNumber, String packagingDate, String country, String name,
+            float temperature, FreezingMethodsEnum metodoCongelacion, int segundosExposicion, MaterialTypesEnum material) throws InvalidParameterExceptione {
         super(expiracyDate, lotNumber, packagingDate, country, name, temperature);
         this.FREEZING_METHOD = metodoCongelacion;
         this.exposureInSeconds = segundosExposicion;
@@ -61,7 +61,7 @@ public class FrozenNitro extends Frozen{
 
     @Override
     public String toCsvLine() {
-        return name + "," + EXPIRACY_DATE + "," + LOT_NUMBER + "," + packagingDate + "," + country + "," + FREEZING_METHOD + "," + exposureInSeconds + "," + MATERIAL;
+        return name + "," + expiracyDate + "," + lotNumber + "," + packagingDate + "," + country + "," + FREEZING_METHOD + "," + exposureInSeconds + "," + MATERIAL;
     }
 
     
