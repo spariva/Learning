@@ -9,7 +9,7 @@ public class Board {
     private int totalVisibles;
 
     public Board() {
-        Cell[][] board = new Cell[ALTO][ANCHO];
+        board = new Cell[ALTO][ANCHO];
         generateCells();
     }
 
