@@ -7,8 +7,8 @@ public class Frozen_Air extends Frozen{
     int steamWater;
     
 
-    public Frozen_Air(String expiracyDate, int lotNumber, String packagingDate, String country, String name,
-            float temperature, int nytrogen, int oxygen, int carbonDyoxide, int steamWater) {
+    public Frozen_Air(String expiracyDate, String lotNumber, String packagingDate, String country, String name,
+            float temperature, int nytrogen, int oxygen, int carbonDyoxide, int steamWater) throws InvalidParameterExceptione {
         super(expiracyDate, lotNumber, packagingDate, country, name, temperature);
         this.nytrogen = nytrogen;
         this.oxygen = oxygen;
@@ -31,7 +31,7 @@ public class Frozen_Air extends Frozen{
 
     @Override
     public String toCsvLine() {
-        return name + "," + EXPIRACY_DATE + "," + LOT_NUMBER + "," + packagingDate + "," + country + "," + nytrogen + "," + oxygen + "," + carbonDyoxide + "," + steamWater;
+        return name + "," + expiracyDate + "," + lotNumber + "," + packagingDate + "," + country + "," + nytrogen + "," + oxygen + "," + carbonDyoxide + "," + steamWater;
     }
 
     
